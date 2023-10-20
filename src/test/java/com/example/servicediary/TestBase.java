@@ -1,0 +1,38 @@
+package com.example.servicediary;
+
+import com.example.servicediary.util.HibernateUtil;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.containers.PostgreSQLContainer;
+
+@SpringBootTest
+@Sql("/schema-data.sql")
+public class TestBase {
+    private final static PostgreSQLContainer<?> POSTGRES_SQL_CONTAINER =
+            new PostgreSQLContainer<>("postgres:16.0");
+
+    @BeforeAll
+    static void startContainer(){
+        POSTGRES_SQL_CONTAINER.start();
+    }
+
+    public static SessionFactory buildSessionFactory() {
+
+        Configuration configuration = HibernateUtil.buildConfiguration();
+
+        configuration.setProperty("hibernate.connection.url", POSTGRES_SQL_CONTAINER.getJdbcUrl());
+        configuration.configure();
+
+        return configuration.buildSessionFactory();
+    }
+
+    @DynamicPropertySource
+    static void dynamicProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", POSTGRES_SQL_CONTAINER::getJdbcUrl);
+    }
+}
