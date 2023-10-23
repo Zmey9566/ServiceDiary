@@ -10,7 +10,7 @@
 <p th:text="${mentor.getName()}"/>
 <p th:text="${mentor.getPrice()}"/>
 
-<form th:method="POST" th:action="@{/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
+<form th:method="POST" th:action="@{/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
   <br/>
   <input type="submit" value="Delete">
 </form>
