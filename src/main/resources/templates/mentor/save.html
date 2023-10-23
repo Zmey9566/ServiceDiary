@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>Save</h1>
+    <form th:method="POST" th:action="@{/mentor}" th:object="${mentor}">
+        <label for="name">Name: </label>
+        <input type="text" th:field="*{name}" id="name">
+        <br/>
+        <label for="family">Family: </label>
+        <input type="text" th:field="*{family}" id="family">
+        <br/>
+        <label for="price">Price: </label>
+        <input type="number" th:field="*{price}" id="price">
+        <br/>
+        <input type="submit" value="Create">
+    </form>
 </body>
 </html>

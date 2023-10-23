@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
+    <label for="name">Name: </label>
+    <input type="text" th:field="*{name}" id="name" th:value="*{name}"/>
+    <br/>
+    <label for="family">Family: </label>
+    <input type="text" th:field="*{family}" id="family" th:value="*{family}"/>
+    <br/>
+    <label for="price">Price: </label>
+    <input type="number" th:field="*{price}" step="any" id="price" th:value="*{price}"/>
+    <br/>
+    <input type="submit" value="Update">
+
+</form>
+</body>
+</html>
