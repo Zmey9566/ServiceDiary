@@ -8,6 +8,11 @@
 <div th:each="mentor : ${mentors}">
     <a th:href="@{/mentor/{id}(id=${mentor.getId()})}" th:text="${mentor.getName()}">mentor </a>
 </div>
-<a href="/">Return</a>
+<form th:method="GET" th:action="@{/}" >
+    <br/>
+    <input type="submit" value="Back">
+</form>
+
+<a href="/mentor/save">Save</a>
 </body>
 </html>
