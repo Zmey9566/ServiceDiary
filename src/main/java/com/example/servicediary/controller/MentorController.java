@@ -50,15 +50,15 @@ public class MentorController {
         return "redirect:/mentor";
     }
 
-    @GetMapping("/{id}/delete")
-    public String delete(Model model, @PathVariable("id") int id) {
-        model.addAttribute("mentor", mentorDao.findById(id));
-        return "mentor/delete";
-    }
+//    @GetMapping("/{id}/delete")
+//    public String delete(Model model, @PathVariable("id") int id) {
+//        model.addAttribute("mentor", mentorDao.findById(id));
+//        return "mentor/delete";
+//    }
 
     @PostMapping("/{id}/delete")
-    public String deleteById(@ModelAttribute("mentor") Mentor mentor) {
-        mentorDao.removeById(mentor.getId());
+    public String deleteById(@PathVariable("id") int id) {
+        mentorDao.removeById(id);
         return "redirect:/mentor";
     }
 }

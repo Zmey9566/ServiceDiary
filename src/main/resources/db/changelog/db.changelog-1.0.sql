@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS student
     family varchar(25),
     name   varchar(25),
     level  varchar(25),
-    mentor_Id INT REFERENCES mentor (id)
+    mentor_Id INT REFERENCES mentor (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
