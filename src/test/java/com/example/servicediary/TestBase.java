@@ -1,8 +1,5 @@
 package com.example.servicediary;
 
-import com.example.servicediary.util.HibernateUtil;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -19,16 +16,6 @@ public class TestBase {
     @BeforeAll
     static void startContainer(){
         POSTGRES_SQL_CONTAINER.start();
-    }
-
-    public static SessionFactory buildSessionFactory() {
-
-        Configuration configuration = HibernateUtil.buildConfiguration();
-
-        configuration.setProperty("hibernate.connection.url", POSTGRES_SQL_CONTAINER.getJdbcUrl());
-        configuration.configure();
-
-        return configuration.buildSessionFactory();
     }
 
     @DynamicPropertySource

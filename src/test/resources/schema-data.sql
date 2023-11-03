@@ -26,9 +26,10 @@ INSERT into mentor
 (family, name, price)
 
 values
-    ('Sidorov', 'Semen', 1500000.34000000008381903171539306640625),
-    ('Almazov', 'Grigory', 1500000.34000000008381903171539306640625),
-    ('Evmenov', 'Anton', 1500000.34000000008381903171539306640625);
+    ('Sidorov', 'Semen', 1500000.34567800001241266727447509765625),
+--     ('Sidorov', 'Ivan', 1500000.3),
+    ('Almazov', 'Grigory', 1500000.34567800001241266727447509765625),
+    ('Evmenov', 'Anton', 1500000.34567800001241266727447509765625);
 
 INSERT into student
 (family, name, level, mentor_Id)

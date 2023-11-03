@@ -4,9 +4,9 @@ INSERT into mentor
 (family, name, price)
 
 values
-    ('Sidorov', 'Semen', 1500000.34000000008381903171539306640625),
-    ('Almazov', 'Grigory', 1500000.34000000008381903171539306640625),
-    ('Evmenov', 'Anton', 1500000.34000000008381903171539306640625);
+    ('Sidorov', 'Semen', 1500000.34),
+    ('Almazov', 'Grigory', 1500000.34),
+    ('Evmenov', 'Anton', 1500000.34);
 
 --changeset Alexander:2
 -- Заполнение таблицы student
