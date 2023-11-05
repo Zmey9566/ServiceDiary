@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MentorDao extends JpaRepository<Mentor, Integer> {
@@ -16,4 +17,5 @@ public interface MentorDao extends JpaRepository<Mentor, Integer> {
 
 //    @Query(value = "DELETE FROM mentor WHERE id = :id", nativeQuery = true)
 //    public void removeById(int id);
+
 }

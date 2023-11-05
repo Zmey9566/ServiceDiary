@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
@@ -219,7 +220,6 @@ public class MentorTestByJPA extends TestBase {
         }
 
 
-
         @Test
         @DisplayName("Очистка таблицы")
         void testRemoveAll() {
@@ -229,47 +229,23 @@ public class MentorTestByJPA extends TestBase {
                     "количество записей в таблице не соответствует");
         }
     }
+
     @Nested
     @DisplayName("Negative tests for MentorDao")
     class NegativeTests {
+
         @Test
-        @DisplayName("Попытка удаления объекта с несуществующим ID")
+        @DisplayName("Попытка поиска объекта с несуществующим ID")
         void testNegative() throws IllegalArgumentException {
             int id = 10;
-           try {
-               if (mentorDao.findById(id).equals(empty())) {
-                   throw new IllegalArgumentException("Такого пользователя не существует");
-               } else {
-                   mentorDao.deleteById(id);
-                   System.out.println("Запись с id " + id + " успешно удалена");
-               }
-           } catch (IllegalArgumentException e) {
-               final var exception = e.getMessage();
-               System.out.println("Пользователь с id " + id + " не найден");
-               assertEquals("Такого пользователя не существует", exception,
-                       "Неверное сообщение об ошибке");
-           }
+            assertThrows(IllegalArgumentException.class, () -> mentorDao.findById(id).
+                            orElseThrow(() -> new IllegalArgumentException()),
+                    "Сообщение об ошибке не было получено");
         }
-
-//        @Test
-//        @DisplayName("Попытка смены id для созданного объекта")
-//        void  testNegative2() {
-//            final var allMentors = mentorDao.findAll();
-//            final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
-//                    .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
-//            sidorovSemen.setId(5);
-//            System.out.println(sidorovSemen);
-//            final var exception = assertThrows(HibernateException.class,
-//                    () -> mentorDao.save(sidorovSemen), "Неверный exception");
-//
-//            assertEquals("identifier of an instance of com.example.servicediary.entity." +
-//                            "Mentor was altered from 5 to 1", exception.getMessage(),
-//                    "Неверное сообщение об ошибке");
-//        }
 
         @Test
         @DisplayName("Попытка установки в поле Фамилия значения больше разрешенной длины")
-        void  testNegative3() {
+        void testNegative3() {
             final var allMentors = mentorDao.findAll();
             final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
                     .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
@@ -287,7 +263,7 @@ public class MentorTestByJPA extends TestBase {
 
         @Test
         @DisplayName("Попытка установки в поле Имя значения больше разрешенной длины")
-        void  testNegative4() {
+        void testNegative4() {
             final var allMentors = mentorDao.findAll();
             final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
                     .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
