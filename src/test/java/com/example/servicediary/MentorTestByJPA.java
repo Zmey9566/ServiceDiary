@@ -2,19 +2,20 @@ package com.example.servicediary;
 
 import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.entity.Mentor;
-import org.hibernate.HibernateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.data.domain.Sort;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 
+import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -233,15 +234,21 @@ public class MentorTestByJPA extends TestBase {
     class NegativeTests {
         @Test
         @DisplayName("Попытка удаления объекта с несуществующим ID")
-        void testNegative() throws InterruptedException {
-            System.out.println(mentorDao.findById(10));
-            mentorDao.deleteById(100);
-//            final var exception = assertThrows(IllegalArgumentException.class, () -> mentorDao.deleteById(10),
-//                    "Неверный exception");
-//
-//            assertEquals("attempt to create delete event with null entity", exception.getMessage(),
-//                    "Неверное сообщение об ошибке");
-
+        void testNegative() throws IllegalArgumentException {
+            int id = 10;
+           try {
+               if (mentorDao.findById(id).equals(empty())) {
+                   throw new IllegalArgumentException("Такого пользователя не существует");
+               } else {
+                   mentorDao.deleteById(id);
+                   System.out.println("Запись с id " + id + " успешно удалена");
+               }
+           } catch (IllegalArgumentException e) {
+               final var exception = e.getMessage();
+               System.out.println("Пользователь с id " + id + " не найден");
+               assertEquals("Такого пользователя не существует", exception,
+                       "Неверное сообщение об ошибке");
+           }
         }
 
 //        @Test

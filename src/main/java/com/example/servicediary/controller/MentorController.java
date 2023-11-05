@@ -1,5 +1,6 @@
 package com.example.servicediary.controller;
 
+import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.entity.Mentor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mentor")
 public class MentorController {
 
-    private final MentorDao mentorDao;
+    private final MentorService mentorDao;
 
     @Autowired
-    public MentorController(MentorDao mentorDao) {
+    public MentorController(MentorService mentorDao) {
         this.mentorDao = mentorDao;
     }
 
