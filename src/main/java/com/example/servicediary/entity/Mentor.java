@@ -23,7 +23,7 @@ public class Mentor {
     private String name;
     private BigDecimal price;
     @OneToMany(mappedBy = "mentor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    List<Student> students;
+    private List<Student> students;
 
     public Mentor(String family, String name, BigDecimal price) {
         this.family = family;

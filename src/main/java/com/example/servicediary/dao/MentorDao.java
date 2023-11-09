@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface MentorDao extends JpaRepository<Mentor, Integer> {
     public List <Mentor> getAllByFamily(String family, Sort sort);
+    public List <Mentor> findAllByOrderByIdAsc();
+
     @Query(value = "SELECT * FROM mentor WHERE name = :userName", nativeQuery = true)
     public List <Mentor> get(String userName);
 

@@ -2,11 +2,15 @@ package com.example.servicediary.controller;
 
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
+import com.example.servicediary.dto.MentorReadDto;
+import com.example.servicediary.dto.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/mentor")
@@ -21,13 +25,13 @@ public class MentorController {
 
     @GetMapping()
     public String mentorIndex(Model model){
-        model.addAttribute("mentors", mentorDao.findAll());
+        model.addAttribute("mentors", mentorDao.getAllById());
         return "mentor/mentorIndex";
     }
 
     @GetMapping("/{id}")
     public String showMentor(@PathVariable("id")int id, Model model) {
-        Mentor mentor = mentorDao.findById(id).orElseThrow(() -> new RuntimeException("Такого ментра не существует"));
+        var mentor = mentorDao.findById(id).orElseThrow(() -> new RuntimeException("Такого ментра не существует"));
         model.addAttribute("mentor", mentor);
         return "mentor/showOne";
     }
@@ -38,8 +42,8 @@ public class MentorController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("mentor") Mentor mentor) {
-        mentorDao.save(mentor);
+    public String create(@ModelAttribute("mentor") MentorSaveDto mentorSaveDto) {
+        mentorDao.save(mentorSaveDto);
         return "redirect:/mentor";
     }
 
@@ -51,8 +55,8 @@ public class MentorController {
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("mentor") Mentor mentor) {
-        mentorDao.save(mentor);
+    public String update(@ModelAttribute("mentor") MentorReadDto mentorReadDto, @PathVariable("id") int id) {
+        mentorDao.update(mentorReadDto, id);
         return "redirect:/mentor";
     }
 
