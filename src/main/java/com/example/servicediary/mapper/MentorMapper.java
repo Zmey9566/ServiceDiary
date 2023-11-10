@@ -3,6 +3,7 @@ package com.example.servicediary.mapper;
 import com.example.servicediary.dto.MentorReadDto;
 import com.example.servicediary.dto.MentorSaveDto;
 import com.example.servicediary.dto.StudentReadDto;
+import com.example.servicediary.dto.StudentSaveDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.entity.Student;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MentorMapper {
 
-    private final StudentMapper studentReadMapper;
-    //    private final StudentSaveMapper studentSaveMapper;
+    private final StudentMapper studentMapper;
 
     public MentorReadDto mapToMentorDto(Mentor mentor) {
         List<StudentReadDto> mayBeStudent = Optional.ofNullable(mentor.getStudents())
-                .map(this::mapList)
+                .map(this::mapToStudentDTOList)
                 .orElse(null);
 
         return MentorReadDto
@@ -33,11 +33,20 @@ public class MentorMapper {
                 .students(mayBeStudent)
                 .build();
     }
+    private List<StudentReadDto> mapToStudentDTOList(List<Student> studentList) {
+        List<StudentReadDto> result = new ArrayList<>();
+
+        for (Student student : studentList) {
+            result.add(studentMapper.mapToStudentDto(student));
+        }
+
+        return result;
+    }
 
     public Mentor mapToMentor(MentorSaveDto mentorSaveDto) {
-//        List<StudentSaveDto> mayBeStudent = Optional.ofNullable(mentorSaveDto.getStudents())
-//                .map(this::mapList)
-//                .orElse(null);
+        List<StudentSaveDto> mayBeStudent = Optional.ofNullable(mentorSaveDto.getStudents())
+                .map(this::mapToStudentList)
+                .orElse(null);
 
         return Mentor
                 .builder()
@@ -48,23 +57,14 @@ public class MentorMapper {
                 .build();
     }
 
-//    private List<StudentSaveDto> mapList(List<Student> studentList) {
-//        List<StudentSaveDto> result = new ArrayList<>();
-//
-//        for (Student student : studentList) {
-//            result.add(studentSaveMapper.map(student));
-//        }
-//
-//        return result;
-//    }
+    private List<StudentSaveDto> mapToStudentList(List<StudentSaveDto> studentList) {
+        List<StudentSaveDto> result = new ArrayList<>();
 
-    private List<StudentReadDto> mapList(List<Student> studentList) {
-        List<StudentReadDto> result = new ArrayList<>();
-
-        for (Student student : studentList) {
-            result.add(studentReadMapper.mapToStudentDto(student));
+        for (StudentSaveDto student : studentList) {
+            result.add(studentMapper.mapToStudent(student));
         }
 
         return result;
     }
+
 }
