@@ -44,7 +44,7 @@ public class MentorMapper {
     }
 
     public Mentor mapToMentor(MentorSaveDto mentorSaveDto) {
-        List<StudentSaveDto> mayBeStudent = Optional.ofNullable(mentorSaveDto.getStudents())
+        List<Student> mayBeStudent = Optional.ofNullable(mentorSaveDto.getStudents())
                 .map(this::mapToStudentList)
                 .orElse(null);
 
@@ -53,15 +53,15 @@ public class MentorMapper {
                 .family(mentorSaveDto.getFamily())
                 .name(mentorSaveDto.getName())
                 .price(mentorSaveDto.getPrice())
-//                .students(mayBeStudent)
+                .students(mayBeStudent)
                 .build();
     }
 
-    private List<StudentSaveDto> mapToStudentList(List<StudentSaveDto> studentList) {
-        List<StudentSaveDto> result = new ArrayList<>();
+    private List<Student> mapToStudentList(List<StudentSaveDto> studentList) {
+        List<Student> result = new ArrayList<>();
 
-        for (StudentSaveDto student : studentList) {
-            result.add(studentMapper.mapToStudent(student));
+        for (StudentSaveDto studentDto : studentList) {
+            result.add(studentMapper.mapToStudent(studentDto));
         }
 
         return result;

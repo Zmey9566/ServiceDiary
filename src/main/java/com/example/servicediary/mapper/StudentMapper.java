@@ -17,8 +17,8 @@ public class StudentMapper {
                 .build();
     }
 
-    StudentSaveDto mapToStudent(StudentSaveDto studentSaveDto) {
-        return StudentSaveDto.builder()
+    Student mapToStudent(StudentSaveDto studentSaveDto) {
+        return Student.builder()
                 .name(studentSaveDto.getName())
                 .family(studentSaveDto.getFamily())
                 .level(studentSaveDto.getLevel())
