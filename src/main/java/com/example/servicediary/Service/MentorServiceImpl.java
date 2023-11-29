@@ -1,8 +1,9 @@
 package com.example.servicediary.Service;
 
 import com.example.servicediary.dao.MentorDao;
-import com.example.servicediary.dto.MentorReadDto;
-import com.example.servicediary.dto.MentorSaveDto;
+import com.example.servicediary.dto.noRest.MentorReadDto;
+import com.example.servicediary.dto.noRest.MentorSaveDto;
+import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.mapper.MentorMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 @Service
 @RequiredArgsConstructor
@@ -40,6 +40,13 @@ public class MentorServiceImpl implements MentorService{
                 .toList();
     }
 
+    @Override
+    public List<MentorReadRestDto> getAll() {
+        return mentorDao.findAllByOrderByIdAsc()
+                .stream()
+                .map(mentorMapper::mapToMentorRestDto)
+                .toList();
+    }
 
     @Override
     public Optional<MentorReadDto> findById(Integer id) {
@@ -66,6 +73,17 @@ public class MentorServiceImpl implements MentorService{
                 .name(mentorReadDto.getName())
                 .price(mentorReadDto.getPrice())
 //                .students(mentorSaveDto.getStudents())
+                .build();
+        mentorDao.save(mentor);
+    }
+
+    @Override
+    public void update2(MentorReadRestDto mentorReadRestDto, Integer id) {
+        Mentor mentor = Mentor.builder()
+                .id(mentorReadRestDto.getId())
+                .family(mentorReadRestDto.getFamily())
+                .name(mentorReadRestDto.getName())
+                .price(mentorReadRestDto.getPrice())
                 .build();
         mentorDao.save(mentor);
     }

@@ -1,4 +1,4 @@
-package com.example.servicediary.controller;
+package com.example.servicediary.controller.noRest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

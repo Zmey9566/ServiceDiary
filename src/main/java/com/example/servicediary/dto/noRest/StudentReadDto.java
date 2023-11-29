@@ -1,4 +1,4 @@
-package com.example.servicediary.dto;
+package com.example.servicediary.dto.noRest;
 
 import com.example.servicediary.entity.Mentor;
 import lombok.Builder;

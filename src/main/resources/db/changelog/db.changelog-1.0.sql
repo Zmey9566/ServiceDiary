@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS mentor
     id     SERIAL PRIMARY KEY,
     family varchar(25),
     name   varchar(25),
-    price  decimal
+    price  bigint
 
 );
 --changeset Alexander:2

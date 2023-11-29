@@ -1,7 +1,7 @@
 package com.example.servicediary.mapper;
 
-import com.example.servicediary.dto.StudentReadDto;
-import com.example.servicediary.dto.StudentSaveDto;
+import com.example.servicediary.dto.noRest.StudentReadDto;
+import com.example.servicediary.dto.noRest.StudentSaveDto;
 import com.example.servicediary.entity.Student;
 import org.springframework.stereotype.Controller;
 

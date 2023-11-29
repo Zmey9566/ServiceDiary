@@ -1,16 +1,15 @@
-package com.example.servicediary.controller;
+package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.Service.MentorService;
-import com.example.servicediary.dao.MentorDao;
-import com.example.servicediary.dto.MentorReadDto;
-import com.example.servicediary.dto.MentorSaveDto;
+import com.example.servicediary.dto.noRest.MentorReadDto;
+import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/mentor")
@@ -24,25 +23,29 @@ public class MentorController {
     }
 
     @GetMapping()
-    public String mentorIndex(Model model){
+    public String mentorIndex(Model model) {
         model.addAttribute("mentors", mentorDao.getAllById());
         return "mentor/mentorIndex";
     }
 
     @GetMapping("/{id}")
-    public String showMentor(@PathVariable("id")int id, Model model) {
+    public String showMentor(@PathVariable("id") int id, Model model) {
         var mentor = mentorDao.findById(id).orElseThrow(() -> new RuntimeException("Такого ментра не существует"));
         model.addAttribute("mentor", mentor);
         return "mentor/showOne";
     }
 
     @GetMapping("/save")
-    public String saveStudent(@ModelAttribute("mentor") Mentor mentor) {
+    public String saveMentor(@ModelAttribute("mentor") @Validated Mentor mentor) {
         return "mentor/save";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("mentor") MentorSaveDto mentorSaveDto) {
+    public String create(@ModelAttribute("mentor") @Validated MentorSaveDto mentorSaveDto,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "mentor/save";
+        }
         mentorDao.save(mentorSaveDto);
         return "redirect:/mentor";
     }
@@ -55,7 +58,11 @@ public class MentorController {
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("mentor") MentorReadDto mentorReadDto, @PathVariable("id") int id) {
+    public String update(@PathVariable("id") int id, @ModelAttribute("mentor") @Validated MentorReadDto mentorReadDto,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/mentor/edit";
+        }
         mentorDao.update(mentorReadDto, id);
         return "redirect:/mentor";
     }

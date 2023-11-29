@@ -24,9 +24,9 @@ public class MentorTestByJPA extends TestBase {
 
     MentorDao mentorDao;
 
-    BigDecimal price = new BigDecimal(10_000_000_456.45);
-    BigDecimal price2 = new BigDecimal(1500000.34);
-    BigDecimal price3 = new BigDecimal(1500000.34567800001241266727447509765625);
+
+    Long price = 125000L;
+    Long price3 = 145000L;
 
     private final Mentor mentor1 = new Mentor("Ivanov", "Ivan", price);
     private final Mentor mentor2 = new Mentor("Petrov", "Ivan", price);

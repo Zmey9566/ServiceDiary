@@ -1,4 +1,4 @@
-package com.example.servicediary.dto;
+package com.example.servicediary.dto.noRest;
 
 import lombok.Builder;
 import lombok.Value;

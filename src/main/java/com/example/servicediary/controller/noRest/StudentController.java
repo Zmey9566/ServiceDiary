@@ -1,4 +1,4 @@
-package com.example.servicediary.controller;
+package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.dao.StudentDao;
 import com.example.servicediary.entity.Student;

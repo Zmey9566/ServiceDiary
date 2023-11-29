@@ -1,12 +1,10 @@
 package com.example.servicediary;
 
-import com.example.servicediary.dto.MentorSaveDto;
+import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.mapper.MentorMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +12,7 @@ public class MentorMapperTest extends TestBase{
 
     MentorMapper mentorMapper;
 
-    BigDecimal price = new BigDecimal(1500000.34567800001241266727447509765625);
+    Long price = 150000L;
 
     private final Mentor mentor = new Mentor("Aivazovskiy", "Stepan", price);
 

@@ -12,15 +12,20 @@
     <br/>
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm">Family</span>
-        <input type="text" th:field="*{family}" id="family" th:value="*{family}" class="form-control" aria-describedby="inputGroup-sizing-sm">
+        <input type="text" th:field="*{family}" id="family" th:value="*{family}" class="form-control"
+               aria-describedby="inputGroup-sizing-sm">
+        <span style="color: red" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Full name error</span>
     </div>
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm1">Name</span>
-        <input type="text" th:field="*{name}" id="name" th:value="*{name}" class="form-control" aria-describedby="inputGroup-sizing-sm">
+        <input type="text" th:field="*{name}" id="name" th:value="*{name}" class="form-control"
+               aria-describedby="inputGroup-sizing-sm">
+        <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Full name error</span>
     </div>
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm2">Price</span>
-        <input type="text" th:field="*{price}" step="any" id="price" class="form-control" aria-describedby="inputGroup-sizing-sm">
+        <input type="text" th:field="*{price}" step="any" id="price" class="form-control"
+               aria-describedby="inputGroup-sizing-sm">
     </div>
 
     <br/>

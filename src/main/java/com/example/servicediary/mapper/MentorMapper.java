@@ -1,9 +1,10 @@
 package com.example.servicediary.mapper;
 
-import com.example.servicediary.dto.MentorReadDto;
-import com.example.servicediary.dto.MentorSaveDto;
-import com.example.servicediary.dto.StudentReadDto;
-import com.example.servicediary.dto.StudentSaveDto;
+import com.example.servicediary.dto.noRest.MentorReadDto;
+import com.example.servicediary.dto.noRest.MentorSaveDto;
+import com.example.servicediary.dto.noRest.StudentReadDto;
+import com.example.servicediary.dto.noRest.StudentSaveDto;
+import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.entity.Student;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,18 @@ public class MentorMapper {
                 .students(mayBeStudent)
                 .build();
     }
+
+    public MentorReadRestDto mapToMentorRestDto(Mentor mentor) {
+
+        return MentorReadRestDto
+                .builder()
+                .id(mentor.getId())
+                .family(mentor.getFamily())
+                .name(mentor.getName())
+                .price(mentor.getPrice())
+                .build();
+    }
+
     private List<StudentReadDto> mapToStudentDTOList(List<Student> studentList) {
         List<StudentReadDto> result = new ArrayList<>();
 

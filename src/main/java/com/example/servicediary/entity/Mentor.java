@@ -1,6 +1,9 @@
 package com.example.servicediary.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,13 +22,18 @@ public class Mentor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Size(min = 2, max = 20, message = "Некорректные данные в поле Фамилия")
+    @NonNull
     private String family;
+    @Size(min = 2, max = 20, message = "Некорректные данные в поле Имя")
+    @NonNull
     private String name;
-    private BigDecimal price;
+
+    private Long price;
     @OneToMany(mappedBy = "mentor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Student> students;
 
-    public Mentor(String family, String name, BigDecimal price) {
+    public Mentor(@NonNull String family, @NonNull String name, Long price) {
         this.family = family;
         this.name = name;
         this.price = price;
