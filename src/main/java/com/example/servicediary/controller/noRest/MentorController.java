@@ -1,6 +1,7 @@
 package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.Service.MentorService;
+import com.example.servicediary.Service.noRest.MentorServiceImpl;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mentor")
 public class MentorController {
 
-    private final MentorService mentorDao;
+    private final MentorService<MentorReadDto, MentorSaveDto> mentorDao;
 
     @Autowired
     public MentorController(MentorService mentorDao) {
@@ -24,7 +25,7 @@ public class MentorController {
 
     @GetMapping()
     public String mentorIndex(Model model) {
-        model.addAttribute("mentors", mentorDao.getAllById());
+        model.addAttribute("mentors", mentorDao.findAllOrdered());
         return "mentor/mentorIndex";
     }
 

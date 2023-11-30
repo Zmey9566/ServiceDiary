@@ -2,12 +2,9 @@ package com.example.servicediary.controller.rest;
 
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
-import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.dto.rest.MentorSaveRestDto;
 import com.example.servicediary.entity.Mentor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

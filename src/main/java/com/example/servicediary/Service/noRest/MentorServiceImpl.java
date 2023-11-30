@@ -1,50 +1,42 @@
-package com.example.servicediary.Service;
+package com.example.servicediary.Service.noRest;
 
+import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
-import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.entity.Mentor;
-import com.example.servicediary.mapper.MentorMapper;
+import com.example.servicediary.util.MapperUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class MentorServiceImpl implements MentorService{
+public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto> {
 
     private final MentorDao mentorDao;
-    private final MentorMapper mentorMapper;
-//    private final MentorSaveMapper mentorSaveMapper;
-//    private  final MentorSaveDto mentorSaveDto;
+    private final MapperUtils mapperUtils;
 
     @Override
-    public List<MentorReadDto> findAll() {
+    public List<MentorReadDto> findAllOrdered() {
         log.info("Возвращаем всех учителей");
-        return mentorDao.findAll()
+                var mentorReadDto = mentorDao.findAll()
                 .stream()
-                .map(mentorMapper::mapToMentorDto)
+                .map(mapperUtils::mapToMentorReadDto)
                 .toList();
+        mentorReadDto.sort((m1, m2)->Integer.compare(m1.getId(), m2.getId()));
+        return mentorReadDto;
     }
 
     @Override
-    public List<MentorReadDto> getAllById() {
-        log.info("Возвращаем всех учителей сортировка по id");
+    public List<MentorReadDto> getAll() {
         return mentorDao.findAllByOrderByIdAsc()
                 .stream()
-                .map(mentorMapper::mapToMentorDto)
-                .toList();
-    }
-
-    @Override
-    public List<MentorReadRestDto> getAll() {
-        return mentorDao.findAllByOrderByIdAsc()
-                .stream()
-                .map(mentorMapper::mapToMentorRestDto)
+                .map(mapperUtils::mapToMentorReadDto)
                 .toList();
     }
 
@@ -53,14 +45,14 @@ public class MentorServiceImpl implements MentorService{
         log.info("Возвращаем учителя с id: " + id);
         return mentorDao
                 .findById(id)
-                .map(mentor -> Optional.of(mentorMapper.mapToMentorDto(mentor)))
+                .map(mentor -> Optional.of(mapperUtils.mapToMentorReadDto(mentor)))
                 .orElse(null);
     }
 
     @Override
     public void save(MentorSaveDto mentorSaveDto) {
         log.info("Добавляем нового учителя");
-        final var newMentor = mentorMapper.mapToMentor(mentorSaveDto);
+        final var newMentor = mapperUtils.mapToMentorSave(mentorSaveDto);
         mentorDao.save(newMentor);
     }
 
@@ -73,17 +65,6 @@ public class MentorServiceImpl implements MentorService{
                 .name(mentorReadDto.getName())
                 .price(mentorReadDto.getPrice())
 //                .students(mentorSaveDto.getStudents())
-                .build();
-        mentorDao.save(mentor);
-    }
-
-    @Override
-    public void update2(MentorReadRestDto mentorReadRestDto, Integer id) {
-        Mentor mentor = Mentor.builder()
-                .id(mentorReadRestDto.getId())
-                .family(mentorReadRestDto.getFamily())
-                .name(mentorReadRestDto.getName())
-                .price(mentorReadRestDto.getPrice())
                 .build();
         mentorDao.save(mentor);
     }
