@@ -5,6 +5,7 @@ import com.example.servicediary.Service.noRest.MentorServiceImpl;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +14,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/mentor")
 public class MentorController {
 
     private final MentorService<MentorReadDto, MentorSaveDto> mentorDao;
-
-    @Autowired
-    public MentorController(MentorService mentorDao) {
-        this.mentorDao = mentorDao;
-    }
 
     @GetMapping()
     public String mentorIndex(Model model) {
