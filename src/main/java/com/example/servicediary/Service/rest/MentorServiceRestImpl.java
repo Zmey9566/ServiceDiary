@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class MentorServiceImpl implements MentorService<MentorReadRestDto, MentorSaveRestDto> {
+public class MentorServiceRestImpl implements MentorService<MentorReadRestDto, MentorSaveRestDto> {
 
     private final MentorDao mentorDao;
     private final MapperUtils mapperUtils;

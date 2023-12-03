@@ -1,6 +1,7 @@
 package com.example.servicediary.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -22,14 +23,23 @@ public class Mentor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Email
+    private String email;
+
+    @NonNull
+    private String role;
+
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Фамилия")
     @NonNull
     private String family;
+
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Имя")
     @NonNull
     private String name;
 
     private Long price;
+
     @OneToMany(mappedBy = "mentor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Student> students;
 

@@ -50,7 +50,7 @@ public class RestMentorController {
     @PatchMapping("/{id}")
     public ResponseEntity<MentorReadRestDto> updateMentor(@PathVariable("id") int id,
                                                           @RequestBody MentorReadRestDto mentorReadRestDto) {
-        mentorService.update2(mentorReadRestDto, id);
+        mentorService.update(mentorReadRestDto, id);
 
         return ResponseEntity.ok(mentorReadRestDto);
     }
