@@ -34,6 +34,8 @@
         <th scope="col">FirstName</th>
         <th scope="col">LastName</th>
         <th scope="col">Price</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
@@ -45,6 +47,8 @@
         <td th:text="${mentor.getFamily()}"></td>
         <td th:text="${mentor.getName()}"></td>
         <td th:text="${mentor.getPrice()}"></td>
+        <td th:text="${mentor.getEmail()}"></td>
+        <td th:text="${mentor.getRole()}"></td>
         <td><form th:method="GET" th:action="@{/mentor/{id}/edit(id=${mentor.getId()})}" th:object="${mentor}">
             <input type="submit" value="Edit">
         </form></td>

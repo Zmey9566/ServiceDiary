@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MapperUtils {
-    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public Mentor mapToMentorRead(MentorReadDto mentorReadDto){
         return modelMapper.map(mentorReadDto, Mentor.class);

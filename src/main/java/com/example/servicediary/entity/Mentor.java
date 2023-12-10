@@ -2,12 +2,9 @@ package com.example.servicediary.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -43,10 +40,12 @@ public class Mentor {
     @OneToMany(mappedBy = "mentor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Student> students;
 
-    public Mentor(@NonNull String family, @NonNull String name, Long price) {
+    public Mentor(@NonNull String family, @NonNull String name, Long price, String email, String role) {
         this.family = family;
         this.name = name;
         this.price = price;
+        this.email = email;
+        this.role = role;
     }
 
     @Override

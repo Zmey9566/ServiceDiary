@@ -16,6 +16,9 @@ databaseChangeLog:
 #                    primaryKey: true
 #                    nullable: false
 #              - column:
-
   - include:
       file: db/changelog/db.changelog-insert.sql
+  - include:
+      file: db/changelog/db.changelog-1.1.sql
+  - include:
+      file: db/changelog/db.changelog-insert-1.1.sql

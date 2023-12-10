@@ -1,21 +1,24 @@
 package com.example.servicediary.dto.noRest;
 
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class MentorSaveDto {
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Фамилия")
     @NonNull
-    String family;
+    private String family;
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Имя")
     @NonNull
-    String name;
-    Long price;
-    List<StudentSaveDto> students;
+    private String name;
+    private Long price;
+    private String email;
+    private String role;
+    private List<StudentSaveDto> students;
 }

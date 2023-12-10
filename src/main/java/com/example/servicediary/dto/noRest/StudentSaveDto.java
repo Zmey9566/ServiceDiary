@@ -1,13 +1,15 @@
 package com.example.servicediary.dto.noRest;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class StudentSaveDto {
 
-    String family;
-    String name;
-    String level;
+    private String family;
+    private String name;
+    private String level;
 }

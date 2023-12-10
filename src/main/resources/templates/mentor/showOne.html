@@ -9,6 +9,8 @@
 <p th:text="${mentor.getId()}"/>
 <p th:text="${mentor.getName()}"/>
 <p th:text="${mentor.getPrice()}"/>
+<p th:text="${mentor.getEmail()}"/>
+<p th:text="${mentor.getRole()}"/>
 
 <form th:method="POST" th:action="@{/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
 

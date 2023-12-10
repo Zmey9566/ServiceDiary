@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Service
+//@Service
 @RequiredArgsConstructor
 @Log4j2
 public class MentorServiceRestImpl implements MentorService<MentorReadRestDto, MentorSaveRestDto> {

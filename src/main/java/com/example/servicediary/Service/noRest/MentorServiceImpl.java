@@ -6,12 +6,12 @@ import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.util.MapperUtils;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +19,17 @@ import java.util.Optional;
 public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto> {
 
     private final MentorDao mentorDao;
+
     private final MapperUtils mapperUtils;
 
     @Override
     public List<MentorReadDto> findAllOrdered() {
         log.info("Возвращаем всех учителей");
-                var mentorReadDto = mentorDao.findAll()
+                final var mentorReadDto = mentorDao.findAll()
                 .stream()
-                .map(mapperUtils::mapToMentorReadDto)
+                .map(mapperUtils::mapToMentorReadDto).
+                        sorted((m1, m2) -> Integer.compare(m1.getId(), m2.getId()))
                 .toList();
-        mentorReadDto.sort((m1, m2)->Integer.compare(m1.getId(), m2.getId()));
         return mentorReadDto;
     }
 
@@ -65,6 +66,8 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
                 .name(mentorReadDto.getName())
                 .price(mentorReadDto.getPrice())
 //                .students(mentorSaveDto.getStudents())
+                .email(mentorReadDto.getEmail())
+                .role(mentorReadDto.getRole())
                 .build();
         mentorDao.save(mentor);
     }
