@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -26,11 +27,11 @@ public class MentorTestByJPA extends TestBase {
 
 
     Long price = 125000L;
-    Long price3 = 145000L;
+    Long price3 = 1500000L;
 
-    private final Mentor mentor1 = new Mentor("Ivanov", "Ivan", price);
-    private final Mentor mentor2 = new Mentor("Petrov", "Ivan", price);
-    private final Mentor mentor3 = new Mentor("Sidorov", "Ivan", price);
+    private final Mentor mentor1 = new Mentor("Ivanov", "Ivan", price, "Ivanov@mail.ru", "ROLE_MENTOR");
+    private final Mentor mentor2 = new Mentor("Petrov", "Ivan", price, "Petrov@mail.ru", "ROLE_MENTOR");
+    private final Mentor mentor3 = new Mentor("Sidorov", "Ivan", price, "Sidorov@mail.ru", "ROLE_MENTOR");
 
     @Autowired
     public MentorTestByJPA(MentorDao mentorDao) {
@@ -109,7 +110,8 @@ public class MentorTestByJPA extends TestBase {
         @DisplayName("Обновление элемента(ов) таблицы")
         void testUpdate() {
             mentorDao.save(mentor1);
-            mentorDao.save(Mentor.builder().family("f").name("f").price(price).build());
+            mentorDao.save(Mentor.builder().family("ff").name("ff").price(price).email("Ivanov1@mail.ru")
+                    .role("ROLE_MENTOR").password("qwerty55").build());
 
             final var allMentors = mentorDao.findAll();
             final var ivanIvanov = allMentors.stream().filter(m -> m.getId() == 4).findFirst()
@@ -128,8 +130,8 @@ public class MentorTestByJPA extends TestBase {
                     () -> assertEquals(ivanIvanov.getId(), 4,
                             "Поля id не соответствуют"),
 
-                    () -> assertEquals(mentor2, "f",
-                            "поле имя для записи с индексом 5 не соответствует f"),
+                    () -> assertEquals(mentor2, "ff",
+                            "поле имя для записи с индексом 5 не соответствует ff"),
 
                     () -> assertEquals(5, mentorDao.findAll().size(),
                             "количество записей в таблице не соответствует")
@@ -213,7 +215,7 @@ public class MentorTestByJPA extends TestBase {
         @DisplayName("добавляем 10000 ментров")
         void tenThousandAdd() {
             for (int i = 0; i < 10000; i++) {
-                mentorDao.save(new Mentor("Ivan", "Ivanov", price));
+                mentorDao.save(new Mentor("Ivan", "Ivanov", price, "Ivanov@mail.ru", "ROLE_MENTOR"));
             }
             assertEquals(mentorDao.findAll().size(), 10003,
                     "количество записей в таблице не соответствует");
@@ -227,6 +229,15 @@ public class MentorTestByJPA extends TestBase {
 
             assertEquals(mentorDao.findAll().size(), 0,
                     "количество записей в таблице не соответствует");
+        }
+
+        @Test
+        @DisplayName("Поиск ментра по email")
+        void testFindByEmail() {
+
+            System.out.println(mentorDao.findAll());
+            assertEquals(mentorDao.findByEmail("Sidorov@mail.ru").getFamily(), "Sidorov",
+                    "Фамилия ментра неверна");
         }
     }
 
@@ -251,13 +262,11 @@ public class MentorTestByJPA extends TestBase {
                     .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
 
             sidorovSemen.setFamily("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
-            final var exception = assertThrows(NonTransientDataAccessException.class,
+            final var exception = assertThrows(TransactionSystemException.class,
                     () -> mentorDao.save(sidorovSemen), "Неверный exception");
 
 
-            assertEquals("could not execute statement [ERROR: value too long for type character varying(25)]" +
-                            " [update mentor set family=?,name=?,price=? where id=?]; " +
-                            "SQL [update mentor set family=?,name=?,price=? where id=?]", exception.getMessage(),
+            assertEquals("Could not commit JPA transaction", exception.getMessage(),
                     "Неверное сообщение об ошибке");
         }
 
@@ -269,14 +278,12 @@ public class MentorTestByJPA extends TestBase {
                     .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
 
             sidorovSemen.setName("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
-            final var exception = assertThrows(NonTransientDataAccessException.class,
+            final var exception = assertThrows(TransactionSystemException.class,
                     () -> mentorDao.save(sidorovSemen), "Неверный exception");
 
             System.out.println("ОШИБКА: " + exception.getMessage());
 
-            assertEquals("could not execute statement [ERROR: value too long for type character varying(25)]" +
-                            " [update mentor set family=?,name=?,price=? where id=?]; " +
-                            "SQL [update mentor set family=?,name=?,price=? where id=?]", exception.getMessage(),
+            assertEquals("Could not commit JPA transaction", exception.getMessage(),
                     "Неверное сообщение об ошибке");
         }
     }

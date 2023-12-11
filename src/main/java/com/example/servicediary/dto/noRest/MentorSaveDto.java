@@ -20,5 +20,6 @@ public class MentorSaveDto {
     private Long price;
     private String email;
     private String role;
+    private String password;
     private List<StudentSaveDto> students;
 }

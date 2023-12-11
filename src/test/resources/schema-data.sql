@@ -9,7 +9,10 @@ CREATE TABLE IF NOT EXISTS mentor
     id     SERIAL PRIMARY KEY,
     family varchar(25),
     name   varchar(25),
-    price  decimal
+    price  decimal,
+    email varchar(50),
+    password varchar(50),
+    role varchar(20)
 
 );
 
@@ -23,13 +26,13 @@ CREATE TABLE IF NOT EXISTS student
 );
 
 INSERT into mentor
-(family, name, price)
+(family, name, price, email, password, role)
 
 values
-    ('Sidorov', 'Semen', 1500000.34567800001241266727447509765625),
+    ('Sidorov', 'Semen', 1500000.34567800001241266727447509765625, 'Sidorov@mail.ru', 'qwerty11', 'ROLE_MENTOR'),
 --     ('Sidorov', 'Ivan', 1500000.3),
-    ('Almazov', 'Grigory', 1500000.34567800001241266727447509765625),
-    ('Evmenov', 'Anton', 1500000.34567800001241266727447509765625);
+    ('Almazov', 'Grigory', 1500000.34567800001241266727447509765625, 'Almazov@mail.ru', 'qwerty12', 'ROLE_MENTOR'),
+    ('Evmenov', 'Anton', 1500000.34567800001241266727447509765625, 'Evmenov@mail.ru', 'qwerty13', 'ROLE_MENTOR');
 
 INSERT into student
 (family, name, level, mentor_Id)

@@ -8,5 +8,5 @@ set
                 when id = 2 then 'Almazov@mail.ru'
                 when id = 3 then 'Evmenov@mail.ru'
         end,
-    role = 'MENTOR'
+    role = 'ROLE_MENTOR'
 where id in('1', '2', '3');

@@ -3,5 +3,5 @@
 -- Добавление полей e-mail и role в таблицу mentor
 
 ALTER TABLE mentor
-ADD email VARCHAR(40),
-ADD role VARCHAR(10);
+ADD email VARCHAR(45),
+ADD role VARCHAR(20);

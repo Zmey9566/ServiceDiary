@@ -9,6 +9,11 @@ import com.example.servicediary.util.MapperUtils;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.bouncycastle.crypto.generators.BCrypt;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,9 +21,11 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto> {
+public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto>, UserDetailsService {
 
     private final MentorDao mentorDao;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final MapperUtils mapperUtils;
 
@@ -53,6 +60,7 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     @Override
     public void save(MentorSaveDto mentorSaveDto) {
         log.info("Добавляем нового учителя");
+        mentorSaveDto.setPassword(bCryptPasswordEncoder.encode(mentorSaveDto.getPassword()));
         final var newMentor = mapperUtils.mapToMentorSave(mentorSaveDto);
         mentorDao.save(newMentor);
     }
@@ -60,6 +68,7 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     @Override
     public void update(MentorReadDto mentorReadDto, Integer id) {
         log.info("Редактируем учителя с id: " + id);
+        mentorReadDto.setPassword(bCryptPasswordEncoder.encode(mentorReadDto.getPassword()));
         Mentor mentor = Mentor.builder()
                 .id(mentorReadDto.getId())
                 .family(mentorReadDto.getFamily())
@@ -67,6 +76,7 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
                 .price(mentorReadDto.getPrice())
 //                .students(mentorSaveDto.getStudents())
                 .email(mentorReadDto.getEmail())
+                .password(mentorReadDto.getPassword())
                 .role(mentorReadDto.getRole())
                 .build();
         mentorDao.save(mentor);
@@ -82,5 +92,10 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     public void deleteAll() {
         log.info("Удаляем всех учителей");
         mentorDao.deleteAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return mentorDao.findByEmail(username);
     }
 }

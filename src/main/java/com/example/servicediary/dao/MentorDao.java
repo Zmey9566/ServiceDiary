@@ -11,11 +11,15 @@ import java.util.Optional;
 
 @Repository
 public interface MentorDao extends JpaRepository<Mentor, Integer> {
-    public List <Mentor> getAllByFamily(String family, Sort sort);
-    public List <Mentor> findAllByOrderByIdAsc();
+
+    List <Mentor> getAllByFamily(String family, Sort sort);
+
+    List <Mentor> findAllByOrderByIdAsc();
+
+    Mentor findByEmail(String email);
 
     @Query(value = "SELECT * FROM mentor WHERE name = :userName", nativeQuery = true)
-    public List <Mentor> get(String userName);
+    List <Mentor> get(String userName);
 
 //    @Query(value = "DELETE FROM mentor WHERE id = :id", nativeQuery = true)
 //    public void removeById(int id);

@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 @Entity
@@ -15,7 +18,7 @@ import java.util.Objects;
 @EqualsAndHashCode(exclude = {"students"})
 @Builder
 @Table(name = "mentor")
-public class Mentor {
+public class Mentor implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +29,10 @@ public class Mentor {
 
     @NonNull
     private String role;
+
+    @NonNull
+    @Size(min = 6, message = "Некорректные данные в поле Пароль")
+    private String password;
 
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Фамилия")
     @NonNull
@@ -59,5 +66,44 @@ public class Mentor {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getAuthority() {
+        return Role.ADMIN.name();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(Role.ADMIN);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

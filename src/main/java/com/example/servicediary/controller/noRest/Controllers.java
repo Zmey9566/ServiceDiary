@@ -9,4 +9,5 @@ public class Controllers {
     public String index() {
         return "/index";
     }
+
 }
