@@ -69,12 +69,12 @@ public class Mentor implements UserDetails {
     }
 
     public String getAuthority() {
-        return Role.ADMIN.name();
+        return Role.ROLE_ADMIN.name();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(Role.ADMIN);
+        return List.of(Role.ROLE_ADMIN);
     }
 
     @Override
