@@ -2,6 +2,7 @@ package com.example.servicediary.Service.noRest;
 
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
+import com.example.servicediary.dao.StudentDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
@@ -25,6 +26,7 @@ import java.util.*;
 public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto>, UserDetailsService {
 
     private final MentorDao mentorDao;
+    private final StudentDao studentDao;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -33,10 +35,10 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     @Override
     public List<MentorReadDto> findAllOrdered() {
         log.info("Возвращаем всех учителей");
-                final var mentorReadDto = mentorDao.findAll()
+        final var mentorReadDto = mentorDao.findAll()
                 .stream()
                 .map(mapperUtils::mapToMentorReadDto).
-                        sorted((m1, m2) -> Integer.compare(m1.getId(), m2.getId()))
+                sorted((m1, m2) -> Integer.compare(m1.getId(), m2.getId()))
                 .toList();
         return mentorReadDto;
     }
@@ -97,6 +99,8 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return mentorDao.findByEmail(username);
+        if (mentorDao.findByEmail(username) == null) {
+            return studentDao.findByEmail(username);
+        } else return mentorDao.findByEmail(username);
     }
 }

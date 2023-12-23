@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS mentor_student;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS mentor;
+DROP TABLE IF EXISTS role;
 
 CREATE TABLE IF NOT EXISTS mentor
 (
@@ -46,6 +47,39 @@ values
     ('Ershov', 'Denis', 'middle'),
     ('Potapov', 'Anton', 'high');
 
+ALTER TABLE student
+    ADD email VARCHAR(45),
+--     ADD role VARCHAR(20),
+    ADD password VARCHAR(100);
+
+update student
+set
+    password = case
+                   when id = 1 then '$2y$10$51ABYWy1u/EKuGIsmQCnxeOzE9sYBB/w8etyjl/ExyPoPL/c89k2u' --qwerty11
+                   when id = 2 then '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'
+                   when id = 3 then '$2y$10$dc1oqrrBpQXN8AJd9qDOkeUowZOhcS96oItIas.HnV4ND19AocWf.'
+                   when id = 4 then '$2y$10$y43fTfYp.S9X6dLvGo3MeuwaAVHM9Qtkf8sCfz0p5fKj9VrxfMf0S'
+                   when id = 5 then '$2y$10$vzaDHIN4FVxzIBflxHOqkO3/nmZJ140Sk6UI4nH6dM6WCARECOSEK'
+                   when id = 6 then '$2y$10$qUgu8dl7DE60i5JvQAfCl.EWmx0r6/xVWGN4PhLLSVMrgB3ouiZfy'
+                   when id = 7 then '$2y$10$7QDO/EDXqE1jeDsKID/9pedvvsKeAkcnhoVLklEVlvaarr3pQKiSS'
+        end
+where id in(1, 2, 3, 4, 5, 6, 7);
+
+update student
+set
+    email = case
+                when id = 1 then 'Kazakov@mail.ru'
+                when id = 2 then 'Grigoryan@mail.ru'
+                when id = 3 then 'Adamov@mail.ru'
+                when id = 4 then 'Kevorlov@mail.ru'
+                when id = 5 then 'Karpenko@mail.ru'
+                when id = 6 then 'Ershov@mail.ru'
+                when id = 7 then 'Potapov@mail.ru'
+        end
+--     ,
+--     role = 'ROLE_STUDENT'
+where id in(1, 2, 3, 4, 5, 6, 7);
+
 CREATE TABLE IF NOT EXISTS mentor_student
 (
     id     SERIAL PRIMARY KEY,
@@ -74,32 +108,32 @@ where student_id in(1, 2, 3, 4, 5, 6, 7);
 CREATE TABLE role
 (
     id SERIAL PRIMARY KEY,
-    role VARCHAR(40)
+    name VARCHAR(40)
 );
 
 -- Добавление в таблицу mentor столбца roleId
 
 ALTER TABLE mentor
-    ADD roleId INT references roles (id);
+    ADD roles_id INT references role (id) ON DELETE CASCADE;
 
 -- Добавление в таблицу student столбца roleId
 
 ALTER TABLE student
-    ADD roleId INT references roles (id);
+    ADD roles_id INT references role (id) ON DELETE CASCADE;
 
-insert into roles(role)
+insert into role(name)
 values
     ('ROLE_ADMIN'),
     ('ROLE_MENTOR'),
     ('ROLE_STUDENT');
 
 UPDATE mentor
-set roleid = 2
+set roles_id = 2
 where id in (1, 2, 3);
 
 -- Дозаполнение таблицы student
 UPDATE student
-set roleid = 3
+set roles_id = 3
 where id between 1 and 7;
 
 

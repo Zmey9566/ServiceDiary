@@ -17,6 +17,7 @@ public class Role implements GrantedAuthority{
 //    ROLE_ADMIN, ROLE_MENTOR, ROLE_STUDENT;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     @OneToMany(mappedBy = "roles")
@@ -27,6 +28,6 @@ public class Role implements GrantedAuthority{
 
     @Override
     public String getAuthority() {
-        return name;
+        return getName();
     }
 }

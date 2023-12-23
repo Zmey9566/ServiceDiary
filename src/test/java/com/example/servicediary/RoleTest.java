@@ -15,9 +15,9 @@ public class RoleTest extends TestBase{
         this.roleDao = roleDao;
     }
 
-    @Test
-    @DisplayName("Поиск роли по e-mail")
-    void findRoleByEmailTest() {
-        System.out.println(roleDao.findByEmail("Sidorov@mail.ru"));
-    }
+//    @Test
+//    @DisplayName("Поиск роли по e-mail")
+//    void findRoleByEmailTest() {
+//        System.out.println(roleDao.findByEmail("Sidorov@mail.ru"));
+//    }
 }

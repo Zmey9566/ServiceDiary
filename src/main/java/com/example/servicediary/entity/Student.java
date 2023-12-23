@@ -54,11 +54,11 @@ public class Student implements UserDetails {
 //        this.role = role;
     }
 
-    public Student(String family, String name, String level) {
-        this.family = family;
-        this.name = name;
-        this.level = level;
-    }
+//    public Student(String family, String name, String level) {
+//        this.family = family;
+//        this.name = name;
+//        this.level = level;
+//    }
 
     @Override
     public boolean equals(Object o) {
