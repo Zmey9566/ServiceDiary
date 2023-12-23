@@ -16,7 +16,7 @@ public class MentorMapperTest extends TestBase{
     Long price = 150000L;
 
     private final Mentor mentor = new Mentor("Aivazovskiy", "Stepan", price,
-            "Aivazovsiy@mail.ru", "ROLE_MENTOR");
+            "Aivazovsiy@mail.ru");
 
     @Autowired
     public MentorMapperTest(MapperUtils mentorMapper) {
@@ -40,7 +40,7 @@ public class MentorMapperTest extends TestBase{
                 .name("Petr")
                 .price(price)
                 .email("Stepanov@mail.ru")
-                .role("ROLE_MENTOR")
+//                .role("ROLE_MENTOR")
                 .password("qwerty11")
                 .build();
         final var mentor1 = mentorMapper.mapToMentorSave(stepanovDto);
@@ -50,7 +50,7 @@ public class MentorMapperTest extends TestBase{
                 .name("Petr")
                 .price(price)
                 .email("Yujhakov@mail.ru")
-                .role("ROLE_MENTOR")
+//                .role("ROLE_MENTOR")
                 .password("qwerty12")
                 .build();
         final var mentor2 = mentorMapper.mapToMentorSave(yujhakovDto);
@@ -64,8 +64,8 @@ public class MentorMapperTest extends TestBase{
                         "Ошибка в зарплате mentor1"),
                 () -> assertEquals(mentor1.getEmail(), stepanovDto.getEmail(),
                         "Ошибка в email mentor1"),
-                () -> assertEquals(mentor1.getRole(), stepanovDto.getRole(),
-                        "Ошибка в Role mentor1"),
+//                () -> assertEquals(mentor1.getRole(), stepanovDto.getRole(),
+//                        "Ошибка в Role mentor1"),
                 () -> assertEquals(mentor2.getFamily(), yujhakovDto.getFamily(),
                         "Ошибка в фамилии mentor1"),
                 () -> assertEquals(mentor2.getName(), yujhakovDto.getName(),
@@ -74,8 +74,8 @@ public class MentorMapperTest extends TestBase{
                         "Ошибка в зарплате mentor1"),
                 () -> assertEquals(mentor2.getEmail(), yujhakovDto.getEmail(),
                         "Ошибка в email mentor1"),
-                () -> assertEquals(mentor2.getRole(), yujhakovDto.getRole(),
-                        "Ошибка в role mentor1"),
+//                () -> assertEquals(mentor2.getRole(), yujhakovDto.getRole(),
+//                        "Ошибка в role mentor1"),
                 () -> assertNotEquals(stepanovDto.getFamily(), yujhakovDto.getFamily(),
                         "Фамилии ментров совпадают"),
                 () -> assertEquals(stepanovDto.getName(), yujhakovDto.getName(),

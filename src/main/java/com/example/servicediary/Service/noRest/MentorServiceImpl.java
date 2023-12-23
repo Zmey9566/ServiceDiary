@@ -5,6 +5,7 @@ import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Student;
 import com.example.servicediary.util.MapperUtils;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +78,7 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
 //                .students(mentorSaveDto.getStudents())
                 .email(mentorReadDto.getEmail())
                 .password(mentorReadDto.getPassword())
-                .role(mentorReadDto.getRole())
+//                .role(mentorReadDto.getRole())
                 .build();
         mentorDao.save(mentor);
     }

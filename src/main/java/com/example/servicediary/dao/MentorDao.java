@@ -1,6 +1,7 @@
 package com.example.servicediary.dao;
 
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Student;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,8 @@ public interface MentorDao extends JpaRepository<Mentor, Integer> {
 
     @Query(value = "SELECT * FROM mentor WHERE name = :userName", nativeQuery = true)
     List <Mentor> get(String userName);
+
+
 
 //    @Query(value = "DELETE FROM mentor WHERE id = :id", nativeQuery = true)
 //    public void removeById(int id);

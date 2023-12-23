@@ -33,30 +33,23 @@
         <th scope="col">id</th>
         <th scope="col">FirstName</th>
         <th scope="col">LastName</th>
-        <th scope="col">Price</th>
-        <th scope="col">Email</th>
-<!--        <th scope="col">Role</th>-->
+        <th scope="col">Level</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
 
-    <tr th:each="mentor : ${mentors}">
-        <td class="active" th:text="${mentor.getId()}">1</td>
-        <td th:text="${mentor.getFamily()}"></td>
-        <td th:text="${mentor.getName()}"></td>
-        <td th:text="${mentor.getPrice()}"></td>
-        <td th:text="${mentor.getEmail()}"></td>
-<!--        <td th:text="${mentor.getRoles()}"></td>-->
-        <td><form th:method="GET" th:action="@{/mentor/{id}/edit(id=${mentor.getId()})}" th:object="${mentor}">
+    <tr th:each="student : ${students}">
+        <td class="active" th:text="${student.getId()}">1</td>
+        <td th:text="${student.getFamily()}"></td>
+        <td th:text="${student.getName()}"></td>
+        <td th:text="${student.getLevel()}"></td>
+        <td><form th:method="GET" th:action="@{/student/{id}/edit(id=${student.getId()})}" th:object="${student}">
             <input type="submit" value="Edit">
         </form></td>
-        <td><form th:method="POST" th:action="@{/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
+        <td><form th:method="POST" th:action="@{/student/{id}/delete(id=${student.getId()})}" th:object="${student}">
             <input type="submit" value="Delete">
-        </form></td>
-        <td><form th:method="GET" th:action="@{/mentor/{id}/showStudent(id=${mentor.getId()})}">
-            <input type="submit" value="Students">
         </form></td>
     </tr>
     </tbody>
@@ -70,8 +63,7 @@
     }
 </style>
 <div class="btn-group" role="group" aria-label="Basic outlined example">
-    <a class="btn btn-primary" href="/mentor/save">Add new</a>
-    <a class="btn btn-primary" href="../">Back</a>
+    <a class="btn btn-primary" href="/mentor">Back</a>
 </div>
 
 

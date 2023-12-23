@@ -19,7 +19,7 @@ public class MentorSaveDto {
     private String name;
     private Long price;
     private String email;
-    private String role;
+//    private int roles;
     private String password;
     private List<StudentSaveDto> students;
 }

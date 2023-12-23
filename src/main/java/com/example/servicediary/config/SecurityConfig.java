@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/rest/mentor/**", "/mentor/**")
-                                .hasAnyRole("STUDENT", "ADMIN")
+                                .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
                                 .requestMatchers( "/student/**")
-                                .hasAnyRole("STUDENT", "ADMIN")
+                                .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .logout(Customizer.withDefaults())
@@ -46,11 +46,11 @@ public class SecurityConfig {
                         final var roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
                         if (roles.contains("ROLE_ADMIN")) {
-                            response.sendRedirect("/");
+                            response.sendRedirect("");
                         } else if (roles.contains("ROLE_MENTOR")) {
-                            response.sendRedirect("/");
+                            response.sendRedirect("");
                         } else if (roles.contains("ROLE_STUDENT")) {
-                            response.sendRedirect("/student");
+                            response.sendRedirect("");
                         }
                     }}));
         return http.build();

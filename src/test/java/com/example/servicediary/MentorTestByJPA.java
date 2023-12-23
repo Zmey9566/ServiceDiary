@@ -1,7 +1,9 @@
 package com.example.servicediary;
 
 import com.example.servicediary.dao.MentorDao;
+import com.example.servicediary.dao.MentorStudentDao;
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Student;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.springframework.transaction.TransactionSystemException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -25,18 +28,18 @@ public class MentorTestByJPA extends TestBase {
 
     MentorDao mentorDao;
 
-
     Long price = 125000L;
     Long price3 = 1500000L;
 
-    private final Mentor mentor1 = new Mentor("Ivanov", "Ivan", price, "Ivanov@mail.ru", "ROLE_MENTOR");
-    private final Mentor mentor2 = new Mentor("Petrov", "Ivan", price, "Petrov@mail.ru", "ROLE_MENTOR");
-    private final Mentor mentor3 = new Mentor("Sidorov", "Ivan", price, "Sidorov@mail.ru", "ROLE_MENTOR");
+    private final Mentor mentor1 = new Mentor("Ivanov", "Ivan", price, "Ivanov@mail.ru");
+    private final Mentor mentor2 = new Mentor("Petrov", "Ivan", price, "Petrov@mail.ru");
+    private final Mentor mentor3 = new Mentor("Sidorov", "Ivan", price, "Sidorov@mail.ru");
 
     @Autowired
     public MentorTestByJPA(MentorDao mentorDao) {
         this.mentorDao = mentorDao;
     }
+
 
     @Test
     void getAllTest() {
@@ -111,7 +114,7 @@ public class MentorTestByJPA extends TestBase {
         void testUpdate() {
             mentorDao.save(mentor1);
             mentorDao.save(Mentor.builder().family("ff").name("ff").price(price).email("Ivanov1@mail.ru")
-                    .role("ROLE_MENTOR").password("qwerty55").build());
+                    .password("qwerty55").build());
 
             final var allMentors = mentorDao.findAll();
             final var ivanIvanov = allMentors.stream().filter(m -> m.getId() == 4).findFirst()
@@ -215,7 +218,7 @@ public class MentorTestByJPA extends TestBase {
         @DisplayName("добавляем 10000 ментров")
         void tenThousandAdd() {
             for (int i = 0; i < 10000; i++) {
-                mentorDao.save(new Mentor("Ivan", "Ivanov", price, "Ivanov@mail.ru", "ROLE_MENTOR"));
+                mentorDao.save(new Mentor("Ivan", "Ivanov", price, "Ivanov@mail.ru"));
             }
             assertEquals(mentorDao.findAll().size(), 10003,
                     "количество записей в таблице не соответствует");
@@ -239,52 +242,53 @@ public class MentorTestByJPA extends TestBase {
             assertEquals(mentorDao.findByEmail("Sidorov@mail.ru").getFamily(), "Sidorov",
                     "Фамилия ментра неверна");
         }
-    }
-
-    @Nested
-    @DisplayName("Negative tests for MentorDao")
-    class NegativeTests {
-
-        @Test
-        @DisplayName("Попытка поиска объекта с несуществующим ID")
-        void testNegative() throws IllegalArgumentException {
-            int id = 10;
-            assertThrows(IllegalArgumentException.class, () -> mentorDao.findById(id).
-                            orElseThrow(() -> new IllegalArgumentException()),
-                    "Сообщение об ошибке не было получено");
-        }
-
-        @Test
-        @DisplayName("Попытка установки в поле Фамилия значения больше разрешенной длины")
-        void testNegative3() {
-            final var allMentors = mentorDao.findAll();
-            final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
-                    .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
-
-            sidorovSemen.setFamily("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
-            final var exception = assertThrows(TransactionSystemException.class,
-                    () -> mentorDao.save(sidorovSemen), "Неверный exception");
 
 
-            assertEquals("Could not commit JPA transaction", exception.getMessage(),
-                    "Неверное сообщение об ошибке");
-        }
+        @Nested
+        @DisplayName("Negative tests for MentorDao")
+        class NegativeTests {
 
-        @Test
-        @DisplayName("Попытка установки в поле Имя значения больше разрешенной длины")
-        void testNegative4() {
-            final var allMentors = mentorDao.findAll();
-            final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
-                    .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
+            @Test
+            @DisplayName("Попытка поиска объекта с несуществующим ID")
+            void testNegative() throws IllegalArgumentException {
+                int id = 10;
+                assertThrows(IllegalArgumentException.class, () -> mentorDao.findById(id).
+                                orElseThrow(() -> new IllegalArgumentException()),
+                        "Сообщение об ошибке не было получено");
+            }
 
-            sidorovSemen.setName("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
-            final var exception = assertThrows(TransactionSystemException.class,
-                    () -> mentorDao.save(sidorovSemen), "Неверный exception");
+            @Test
+            @DisplayName("Попытка установки в поле Фамилия значения больше разрешенной длины")
+            void testNegative3() {
+                final var allMentors = mentorDao.findAll();
+                final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
+                        .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
 
-            System.out.println("ОШИБКА: " + exception.getMessage());
+                sidorovSemen.setFamily("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
+                final var exception = assertThrows(TransactionSystemException.class,
+                        () -> mentorDao.save(sidorovSemen), "Неверный exception");
 
-            assertEquals("Could not commit JPA transaction", exception.getMessage(),
-                    "Неверное сообщение об ошибке");
+
+                assertEquals("Could not commit JPA transaction", exception.getMessage(),
+                        "Неверное сообщение об ошибке");
+            }
+
+            @Test
+            @DisplayName("Попытка установки в поле Имя значения больше разрешенной длины")
+            void testNegative4() {
+                final var allMentors = mentorDao.findAll();
+                final var sidorovSemen = allMentors.stream().filter(m -> m.getId() == 1).findFirst()
+                        .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
+
+                sidorovSemen.setName("grsd784gtsd74rg/89d4ts/96b4gsdtf6/9hb7g/dtf7");
+                final var exception = assertThrows(TransactionSystemException.class,
+                        () -> mentorDao.save(sidorovSemen), "Неверный exception");
+
+                System.out.println("ОШИБКА: " + exception.getMessage());
+
+                assertEquals("Could not commit JPA transaction", exception.getMessage(),
+                        "Неверное сообщение об ошибке");
+            }
         }
     }
 }

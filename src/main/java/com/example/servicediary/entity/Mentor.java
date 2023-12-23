@@ -7,15 +7,13 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString(exclude = {"students"})
-@EqualsAndHashCode(exclude = {"students"})
+@ToString(exclude = {"mentorStudentList"})
 @Builder
 @Table(name = "mentor")
 public class Mentor implements UserDetails {
@@ -27,8 +25,8 @@ public class Mentor implements UserDetails {
     @Email
     private String email;
 
-    @NonNull
-    private String role;
+//    @NonNull
+//    private String role;
 
     @NonNull
     @Size(min = 6, message = "Некорректные данные в поле Пароль")
@@ -44,15 +42,18 @@ public class Mentor implements UserDetails {
 
     private Long price;
 
-    @OneToMany(mappedBy = "mentor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Student> students;
+    @OneToMany(mappedBy = "mentor")
+    private List<MentorStudent> mentorStudentList = new ArrayList<>();
 
-    public Mentor(@NonNull String family, @NonNull String name, Long price, String email, String role) {
+    @ManyToOne
+    private Role roles;
+
+    public Mentor(@NonNull String family, @NonNull String name, Long price, String email) {
         this.family = family;
         this.name = name;
         this.price = price;
         this.email = email;
-        this.role = role;
+//        this.role = role;
     }
 
     @Override
@@ -69,12 +70,12 @@ public class Mentor implements UserDetails {
     }
 
     public String getAuthority() {
-        return Role.ROLE_ADMIN.name();
-    }
+        return roles.getName();
+    } /*Role.ROLE_ADMIN.name()*/
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(Role.ROLE_ADMIN);
+        return List.of(getRoles()); /*Role.ROLE_ADMIN.name()*/
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.dto.rest.MentorSaveRestDto;
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Student;
 import com.example.servicediary.util.MapperUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -78,4 +79,5 @@ public class MentorServiceRestImpl implements MentorService<MentorReadRestDto, M
         log.info("Удаляем всех учителей");
         mentorDao.deleteAll();
     }
+
 }

@@ -2,9 +2,12 @@ package com.example.servicediary.util;
 
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
+import com.example.servicediary.dto.noRest.StudentReadDto;
+import com.example.servicediary.dto.noRest.StudentSaveDto;
 import com.example.servicediary.dto.rest.MentorReadRestDto;
 import com.example.servicediary.dto.rest.MentorSaveRestDto;
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -44,5 +47,21 @@ public class MapperUtils {
 
     public MentorSaveRestDto mapToMentorSaveRestDto(Mentor mentor) {
         return modelMapper.map(mentor, MentorSaveRestDto.class);
+    }
+
+    public Student mapToStudentRead(StudentReadDto studentReadDto) {
+        return modelMapper.map(studentReadDto, Student.class);
+    }
+
+    public StudentReadDto mapToStudentReadDto(Student student) {
+        return modelMapper.map(student, StudentReadDto.class);
+    }
+
+    public Student mapToStudentSave(StudentSaveDto studentSaveDto) {
+        return modelMapper.map(studentSaveDto, Student.class);
+    }
+
+    public StudentSaveDto mapToStudentSaveDto(Student student) {
+        return modelMapper.map(student, StudentSaveDto.class);
     }
 }
