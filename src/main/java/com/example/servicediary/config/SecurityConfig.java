@@ -31,10 +31,10 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/rest/mentor/**", "/mentor/**")
-                                .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
+                                .requestMatchers("/rest/mentor/**", "/mentor/**", "/")
+                                    .hasAnyRole("MENTOR", "ADMIN")
                                 .requestMatchers( "/student/**")
-                                .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
+                                    .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .logout(Customizer.withDefaults())
@@ -50,7 +50,7 @@ public class SecurityConfig {
                         } else if (roles.contains("ROLE_MENTOR")) {
                             response.sendRedirect("");
                         } else if (roles.contains("ROLE_STUDENT")) {
-                            response.sendRedirect("");
+                            response.sendRedirect("/student");
                         }
                     }}));
         return http.build();

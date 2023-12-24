@@ -10,7 +10,7 @@
 <p th:text="${mentor.getName()}"/>
 <p th:text="${mentor.getPrice()}"/>
 <p th:text="${mentor.getEmail()}"/>
-<p th:text="${mentor.getRole()}"/>
+<p th:text="${mentor.getRoles().getName()}"/>
 <p th:text="${mentor.getPassword()}"/>
 
 <form th:method="POST" th:action="@{/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">

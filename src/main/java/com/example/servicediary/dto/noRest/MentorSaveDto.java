@@ -1,5 +1,6 @@
 package com.example.servicediary.dto.noRest;
 
+import com.example.servicediary.entity.Role;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class MentorSaveDto {
     private String name;
     private Long price;
     private String email;
-//    private int roles;
+    private Role roles;
     private String password;
-    private List<StudentSaveDto> students;
+//    private List<StudentSaveDto> students;
 }

@@ -71,17 +71,14 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     @Override
     public void update(MentorReadDto mentorReadDto, Integer id) {
         log.info("Редактируем учителя с id: " + id);
-        mentorReadDto.setPassword(bCryptPasswordEncoder.encode(mentorReadDto.getPassword()));
-        Mentor mentor = Mentor.builder()
-                .id(mentorReadDto.getId())
-                .family(mentorReadDto.getFamily())
-                .name(mentorReadDto.getName())
-                .price(mentorReadDto.getPrice())
-//                .students(mentorSaveDto.getStudents())
-                .email(mentorReadDto.getEmail())
-                .password(mentorReadDto.getPassword())
-//                .role(mentorReadDto.getRole())
-                .build();
+        final var oldPassword = mentorDao.findById(id).get().getPassword();
+        Mentor mentor = mapperUtils.mapToMentorRead(mentorReadDto);
+
+        if (!oldPassword.equals(mentor.getPassword())) {
+            mentor.setPassword(bCryptPasswordEncoder.encode(mentor.getPassword()));
+        } else {
+            mentor.setPassword(oldPassword);
+        }
         mentorDao.save(mentor);
     }
 

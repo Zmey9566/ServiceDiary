@@ -13,7 +13,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString(exclude = {"mentorStudentList"})
+@ToString(exclude = {"mentorStudentList","roles"})
 @Builder
 @Table(name = "mentor")
 public class Mentor implements UserDetails {
@@ -21,30 +21,20 @@ public class Mentor implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Email
     private String email;
-
-//    @NonNull
-//    private String role;
-
     @NonNull
     @Size(min = 6, message = "Некорректные данные в поле Пароль")
     private String password;
-
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Фамилия")
     @NonNull
     private String family;
-
     @Size(min = 2, max = 20, message = "Некорректные данные в поле Имя")
     @NonNull
     private String name;
-
     private Long price;
-
     @OneToMany(mappedBy = "mentor")
     private List<MentorStudent> mentorStudentList = new ArrayList<>();
-
     @ManyToOne
     private Role roles;
 

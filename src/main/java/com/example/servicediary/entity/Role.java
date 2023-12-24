@@ -1,10 +1,7 @@
 package com.example.servicediary.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
@@ -12,7 +9,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "role")
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"mentorRoles", "studentRoles"})
+@RequiredArgsConstructor
+//@Data
 public class Role implements GrantedAuthority{
 //    ROLE_ADMIN, ROLE_MENTOR, ROLE_STUDENT;
 
