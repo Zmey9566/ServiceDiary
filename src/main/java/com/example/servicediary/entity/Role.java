@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "role")
 @Getter
 @Setter
-@ToString(exclude = {"mentorRoles", "studentRoles"})
+@ToString(exclude = {"mentorRoles", "studentRoles", "usersRoles"})
 @RequiredArgsConstructor
 //@Data
 public class Role implements GrantedAuthority{
@@ -25,6 +25,8 @@ public class Role implements GrantedAuthority{
     private List<Mentor> mentorRoles = new ArrayList<>();
     @OneToMany(mappedBy = "roles")
     private List<Student> studentRoles = new ArrayList<>();
+    @OneToMany(mappedBy = "roles")
+    private List<Users> usersRoles = new ArrayList<>();
 
 
     @Override

@@ -3,15 +3,20 @@ package com.example.servicediary.Service.noRest;
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorDao;
 import com.example.servicediary.dao.StudentDao;
+import com.example.servicediary.dao.UsersDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.entity.Student;
+import com.example.servicediary.entity.Users;
+import com.example.servicediary.security.LoginAuthorization;
 import com.example.servicediary.util.MapperUtils;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.bouncycastle.crypto.generators.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,11 +28,11 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto>, UserDetailsService {
+public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto>{
 
     private final MentorDao mentorDao;
-    private final StudentDao studentDao;
-
+//    private final StudentDao studentDao;
+    private final UsersDao usersDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final MapperUtils mapperUtils;
@@ -65,7 +70,13 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
         log.info("Добавляем нового учителя");
         mentorSaveDto.setPassword(bCryptPasswordEncoder.encode(mentorSaveDto.getPassword()));
         final var newMentor = mapperUtils.mapToMentorSave(mentorSaveDto);
+        final var newUser = Users.builder()
+                .email(newMentor.getEmail())
+                .password(newMentor.getPassword())
+                .roles(newMentor.getRoles())
+                .build();
         mentorDao.save(newMentor);
+        usersDao.save(newUser);
     }
 
     @Override
@@ -75,11 +86,26 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
         Mentor mentor = mapperUtils.mapToMentorRead(mentorReadDto);
 
         if (!oldPassword.equals(mentor.getPassword())) {
-            mentor.setPassword(bCryptPasswordEncoder.encode(mentor.getPassword()));
-        } else {
-            mentor.setPassword(oldPassword);
+            mentor.setPassword(bCryptPasswordEncoder.encode(mentor.getPassword()));}
+        final var oldMentor = mentorDao.findById(id);
+//        final var equalsMentor = Mentor.builder()
+//                .email(oldMentor.get().getEmail())
+//                .password(oldMentor.get().getPassword())
+//                .roles(oldMentor.get().getRoles())
+//                .build();
+        final var userByEmail = usersDao.findByEmail(oldMentor.get().getEmail());
+
+        if (!mentor.getEmail().equals(userByEmail.getEmail())) {
+            userByEmail.setEmail(mentor.getEmail());
+        }
+        if (!mentor.getPassword().equals(userByEmail.getPassword())) {
+            userByEmail.setPassword(mentor.getPassword());
+        }
+        if (!mentor.getRoles().equals(userByEmail.getRoles())) {
+            userByEmail.setRoles(mentor.getRoles());
         }
         mentorDao.save(mentor);
+        usersDao.save(userByEmail);
     }
 
     @Override
@@ -94,10 +120,4 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
         mentorDao.deleteAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (mentorDao.findByEmail(username) == null) {
-            return studentDao.findByEmail(username);
-        } else return mentorDao.findByEmail(username);
-    }
 }
