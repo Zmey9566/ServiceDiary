@@ -49,13 +49,7 @@
         <td th:text="${mentor.getPrice()}"></td>
         <td th:text="${mentor.getEmail()}"></td>
         <td th:text="${mentor.getRoles().getName()}"></td>
-        <td><form th:method="GET" th:action="@{/mentor/{id}/edit(id=${mentor.getId()})}" th:object="${mentor}">
-            <input type="submit" value="Edit">
-        </form></td>
-        <td><form th:method="POST" th:action="@{/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
-            <input type="submit" value="Delete">
-        </form></td>
-        <td><form th:method="GET" th:action="@{/mentor/{id}/showStudent(id=${mentor.getId()})}">
+        <td><form th:method="GET" th:action="@{/forMentor/mentor/{id}/showStudent(id=${mentor.getId()})}">
             <input type="submit" value="Students">
         </form></td>
     </tr>
@@ -70,8 +64,7 @@
     }
 </style>
 <div class="btn-group" role="group" aria-label="Basic outlined example">
-    <a class="btn btn-primary" href="/mentor/save">Add new</a>
-    <a class="btn btn-primary" href="../">Back</a>
+    <a class="btn btn-primary" onclick="history.go(-1)">Back</a>
 </div>
 
 

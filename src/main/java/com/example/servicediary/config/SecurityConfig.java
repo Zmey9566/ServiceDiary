@@ -31,9 +31,9 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/rest/mentor/**", "/mentor/**", "/")
+                                .requestMatchers("forAdmin/**")
                                     .hasAnyRole("MENTOR", "ADMIN")
-                                .requestMatchers( "/student/**")
+                                .requestMatchers( "forStudent/**")
                                     .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
                                 .anyRequest().authenticated()
                 )
@@ -46,9 +46,9 @@ public class SecurityConfig {
                         final var roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
                         if (roles.contains("ROLE_ADMIN")) {
-                            response.sendRedirect("");
+                            response.sendRedirect("/forAdmin");
                         } else if (roles.contains("ROLE_MENTOR")) {
-                            response.sendRedirect("");
+                            response.sendRedirect("/forMentor");
                         } else if (roles.contains("ROLE_STUDENT")) {
                             response.sendRedirect("/student");
                         }

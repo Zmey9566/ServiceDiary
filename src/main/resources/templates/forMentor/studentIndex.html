@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:each="student : ${students}">
-    <a th:href="@{/student/{id}(id=${student.getId()})}" th:text="${student.getName()}">student </a>
+    <a th:href="@{/forAdmin/student/{id}(id=${student.getId()})}" th:text="${student.getName()}">student </a>
 </div>
 <a href="/">Return</a>
 </body>

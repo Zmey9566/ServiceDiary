@@ -1,6 +1,7 @@
 package com.example.servicediary;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,6 @@ public class ReadPropertiesOnSpringTest extends TestBase{
     String admin;
     @Test
     void configOnSpringTest() {
-        System.out.println(admin);
+        Assertions.assertEquals(admin, "admin");
     }
 }

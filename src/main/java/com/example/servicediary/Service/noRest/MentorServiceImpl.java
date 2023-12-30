@@ -31,7 +31,6 @@ import java.util.*;
 public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSaveDto>{
 
     private final MentorDao mentorDao;
-//    private final StudentDao studentDao;
     private final UsersDao usersDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -40,12 +39,11 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
     @Override
     public List<MentorReadDto> findAllOrdered() {
         log.info("Возвращаем всех учителей");
-        final var mentorReadDto = mentorDao.findAll()
+        return mentorDao.findAll()
                 .stream()
-                .map(mapperUtils::mapToMentorReadDto).
-                sorted((m1, m2) -> Integer.compare(m1.getId(), m2.getId()))
+                .map(mapperUtils::mapToMentorReadDto)
+                .sorted((m1, m2) -> Integer.compare(m1.getId(), m2.getId()))
                 .toList();
-        return mentorReadDto;
     }
 
     @Override
@@ -87,23 +85,14 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
 
         if (!oldPassword.equals(mentor.getPassword())) {
             mentor.setPassword(bCryptPasswordEncoder.encode(mentor.getPassword()));}
+
         final var oldMentor = mentorDao.findById(id);
-//        final var equalsMentor = Mentor.builder()
-//                .email(oldMentor.get().getEmail())
-//                .password(oldMentor.get().getPassword())
-//                .roles(oldMentor.get().getRoles())
-//                .build();
         final var userByEmail = usersDao.findByEmail(oldMentor.get().getEmail());
 
-        if (!mentor.getEmail().equals(userByEmail.getEmail())) {
-            userByEmail.setEmail(mentor.getEmail());
-        }
-        if (!mentor.getPassword().equals(userByEmail.getPassword())) {
-            userByEmail.setPassword(mentor.getPassword());
-        }
-        if (!mentor.getRoles().equals(userByEmail.getRoles())) {
-            userByEmail.setRoles(mentor.getRoles());
-        }
+        userByEmail.setEmail(mentor.getEmail());
+        userByEmail.setPassword(mentor.getPassword());
+        userByEmail.setRoles(mentor.getRoles());
+
         mentorDao.save(mentor);
         usersDao.save(userByEmail);
     }
@@ -116,7 +105,7 @@ public class MentorServiceImpl implements MentorService<MentorReadDto, MentorSav
 
     @Override
     public void deleteAll() {
-        log.info("Удаляем всех учителей");
+        log.info("Очистка списка учителей");
         mentorDao.deleteAll();
     }
 

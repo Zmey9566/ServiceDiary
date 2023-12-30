@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/student")
+@RequestMapping("forAdmin/student")
 public class StudentController {
     private final StudentDao studentDao;
     @Autowired
@@ -21,7 +21,7 @@ public class StudentController {
     @GetMapping("")
     public String studentIndex(Model model){
         model.addAttribute("students", studentDao.findAll());
-        return "student/studentIndex";
+        return "forAdmin/student/studentIndex";
     }
 
     @GetMapping("/{id}")
@@ -29,7 +29,7 @@ public class StudentController {
         Student student = studentDao.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Такой студент не найден"));
         model.addAttribute("student", student);
-        return "student/showOne";
+        return "forAdmin/student/showOne";
     }
 
 }

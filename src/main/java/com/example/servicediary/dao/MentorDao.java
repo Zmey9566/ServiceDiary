@@ -16,9 +16,7 @@ public interface MentorDao extends JpaRepository<Mentor, Integer> {
     List <Mentor> getAllByFamily(String family, Sort sort);
 
     List <Mentor> findAllByOrderByIdAsc();
-
     Mentor findByEmail(String email);
-
     @Query(value = "SELECT * FROM mentor WHERE name = :userName", nativeQuery = true)
     List <Mentor> get(String userName);
 

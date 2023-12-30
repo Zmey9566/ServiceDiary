@@ -1,6 +1,7 @@
 package com.example.servicediary;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +13,6 @@ public class ReadPropertiesOnJavaTest {
         Properties properties = new Properties();
         FileInputStream fileInputStream = new FileInputStream("src\\test\\resources\\application.properties");
         properties.load(fileInputStream);
-        System.out.println(properties.getProperty("mentor.admin.user-name"));
+        Assertions.assertEquals(properties.getProperty("mentor.admin.user-name"), "admin");
     }
 }

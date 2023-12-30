@@ -13,18 +13,18 @@
 <p th:text="${mentor.getRoles().getName()}"/>
 <p th:text="${mentor.getPassword()}"/>
 
-<form th:method="POST" th:action="@{/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
+<form th:method="POST" th:action="@{/forAdmin/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
 
 </form>
 <br/>
 
-<form th:method="POST" th:action="@{/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
+<form th:method="POST" th:action="@{/forAdmin/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
     <br/>
     <input type="submit" value="Delete">
 </form>
 <br/>
 
-<form th:method="GET" th:action="@{/mentor}" >
+<form th:method="GET" th:action="@{/forAdmin/mentor}" >
     <br/>
     <input type="submit" value="Back">
 </form>

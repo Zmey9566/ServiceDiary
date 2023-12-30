@@ -1,30 +1,25 @@
 package com.example.servicediary;
 
 import com.example.servicediary.dao.MentorDao;
-import com.example.servicediary.dao.MentorStudentDao;
 import com.example.servicediary.entity.Mentor;
-import com.example.servicediary.entity.Student;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.TransactionSystemException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
-import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
-
+@Epic(value = "Тестирование БД")
+@Story(value = "Тестирование сущности ментр")
 @SpringBootTest
-public class MentorTestByJPA extends TestBase {
+public class MentorByJPATest extends TestBase {
 
     MentorDao mentorDao;
 
@@ -36,11 +31,12 @@ public class MentorTestByJPA extends TestBase {
     private final Mentor mentor3 = new Mentor("Sidorov", "Ivan", price, "Sidorov@mail.ru");
 
     @Autowired
-    public MentorTestByJPA(MentorDao mentorDao) {
+    public MentorByJPATest(MentorDao mentorDao) {
         this.mentorDao = mentorDao;
     }
 
 
+    @Step("Step1")
     @Test
     void getAllTest() {
         assertEquals(mentorDao.findAll().size(), 3);

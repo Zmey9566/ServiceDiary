@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form th:method="POST" th:action="@{/mentor}" th:object="${mentor}">
+    <form th:method="POST" th:action="@{/forAdmin/mentor}" th:object="${mentor}">
         <label for="family">Family: </label>
         <input type="text" th:field="*{family}" id="family">
         <span style="color: red" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Full name error</span>
@@ -22,14 +22,14 @@
         <input type="text" th:field="*{email}" id="email">
         <br/>
         <label for="roles">Role: </label>
-        <input type="text" th:field="*{roles}" id="roles">
+        <input type="text" th:field="*{roles.id}" id="roles">
         <br/>
         <label for="password">Password: </label>
         <input type="text" th:field="*{password}" id="password">
         <br/>
         <input type="submit" value="Create">
     </form>
-    <form th:method="GET" th:action="@{/mentor}" >
+    <form th:method="GET" th:action="@{/forAdmin/mentor}" >
         <br/>
         <input type="submit" value="Back">
     </form>

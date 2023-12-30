@@ -22,11 +22,12 @@ public class Role implements GrantedAuthority{
     private int id;
     private String name;
     @OneToMany(mappedBy = "roles")
-    private List<Mentor> mentorRoles = new ArrayList<>();
+    private final List<Mentor> mentorRoles = new ArrayList<>();
     @OneToMany(mappedBy = "roles")
-    private List<Student> studentRoles = new ArrayList<>();
+    private final List<Student> studentRoles = new ArrayList<>();
     @OneToMany(mappedBy = "roles")
-    private List<Users> usersRoles = new ArrayList<>();
+    private final List<Users> usersRoles = new ArrayList<>();
+
 
 
     @Override

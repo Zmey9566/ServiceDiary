@@ -15,8 +15,9 @@ import java.util.*;
 @Data
 @ToString(exclude = {"mentorStudentList","roles"})
 @Builder
+@Getter
 @Table(name = "mentor")
-public class Mentor implements UserDetails {
+public class Mentor  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,7 @@ public class Mentor implements UserDetails {
     private String name;
     private Long price;
     @OneToMany(mappedBy = "mentor")
-    private List<MentorStudent> mentorStudentList = new ArrayList<>();
+    private final List<MentorStudent> mentorStudentList = new ArrayList<>();
     @ManyToOne
     private Role roles;
 
@@ -57,44 +58,5 @@ public class Mentor implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public String getAuthority() {
-        return roles.getName();
-    } /*Role.ROLE_ADMIN.name()*/
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(getRoles()); /*Role.ROLE_ADMIN.name()*/
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

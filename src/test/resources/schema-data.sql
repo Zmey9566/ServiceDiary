@@ -1,6 +1,7 @@
 ----------
 --Create table Mentor
 ----------
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS mentor_student;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS mentor;

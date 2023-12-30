@@ -4,9 +4,6 @@ import com.example.servicediary.entity.Role;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.List;
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

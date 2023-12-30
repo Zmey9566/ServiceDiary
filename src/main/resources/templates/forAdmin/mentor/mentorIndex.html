@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        /* Задайте стиль для фонового изображения */
+        body {
+            background-image: url(https://catherineasquithgallery.com/uploads/posts/2023-02/1676691288_catherineasquithgallery-com-p-zelenii-khakerskii-fon-240.jpg);
+            background-size: auto;
+        }
+
+        /* Задайте стиль для таблицы */
+        .table {
+            width: 700px; /*ширина*/
+            height: 500px; /*высота*/
+            position: absolute;
+            opacity: 0.7; /*прозрачность*/
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: gray;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Price</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="mentor : ${mentors}">
+        <td th:text="${mentor.getId()}">1</td>
+        <td th:text="${mentor.getFamily()}"></td>
+        <td th:text="${mentor.getName()}"></td>
+        <td th:text="${mentor.getPrice()}"></td>
+        <td th:text="${mentor.getEmail()}"></td>
+        <td th:text="${mentor.getRoles().getName()}"></td>
+        <td><form th:method="GET" th:action="@{/forAdmin/mentor/{id}/edit(id=${mentor.getId()})}" th:object="${mentor}">
+            <input type="submit" value="Edit">
+        </form></td>
+        <td><form th:method="POST" th:action="@{/forAdmin/mentor/{id}/delete(id=${mentor.getId()})}" th:object="${mentor}">
+            <input type="submit" value="Delete">
+        </form></td>
+        <td><form th:method="GET" th:action="@{/forAdmin/mentor/{id}/showStudent(id=${mentor.getId()})}">
+            <input type="submit" value="Students">
+        </form></td>
+    </tr>
+    </tbody>
+</table>
+<body>
+<style>
+    .btn-group {
+        position: absolute;
+        top: 550px;
+        left: 850px;
+    }
+</style>
+<div class="btn-group" role="group" aria-label="Basic outlined example">
+    <a class="btn btn-primary" href="mentor/save">Add new</a>
+    <a class="btn btn-primary" href="/">Back</a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

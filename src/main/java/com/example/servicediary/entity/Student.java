@@ -41,7 +41,7 @@ public class Student implements UserDetails {
     private String level;
 
     @OneToMany(mappedBy = "student")
-    private List<MentorStudent> mentorStudentList = new ArrayList<>();
+    private final List<MentorStudent> mentorStudentList = new ArrayList<>();
 
     @ManyToOne
     private Role roles;

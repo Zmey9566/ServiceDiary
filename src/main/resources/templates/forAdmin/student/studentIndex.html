@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="student : ${students}">
+    <a th:href="@{/forAdmin/student/{id}(id=${student.getId()})}" th:text="${student.getName()}">student </a>
+</div>
+<a href="/">Return</a>
+</body>
+</html>
