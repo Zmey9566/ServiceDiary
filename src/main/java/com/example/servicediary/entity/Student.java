@@ -19,7 +19,7 @@ import java.util.Objects;
 @ToString(exclude = {"mentorStudentList"})
 @Builder
 @Table(name = "student")
-public class Student implements UserDetails {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -51,14 +51,7 @@ public class Student implements UserDetails {
         this.name = name;
         this.level = level;
         this.email = email;
-//        this.role = role;
     }
-
-//    public Student(String family, String name, String level) {
-//        this.family = family;
-//        this.name = name;
-//        this.level = level;
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -73,42 +66,4 @@ public class Student implements UserDetails {
         return Objects.hash(id);
     }
 
-    public String getAuthority() {
-        return roles.getName();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(getRoles());
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

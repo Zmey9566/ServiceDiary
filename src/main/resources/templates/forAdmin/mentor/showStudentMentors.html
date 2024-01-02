@@ -44,13 +44,7 @@
         <td class="active" th:text="${mentor.getId()}">1</td>
         <td th:text="${mentor.getFamily()}"></td>
         <td th:text="${mentor.getName()}"></td>
-        <td th:text="${mentor.getLevel()}"></td>
-        <td><form th:method="GET" th:action="@{forAdmin/mentor/{id}/edit(id=${mentor.getId()})}" th:object="${mentor}">
-            <input type="submit" value="Edit">
-        </form></td>
-        <td><form th:method="POST" th:action="@{forAdmin/student/{id}/delete(id=${student.getId()})}" th:object="${student}">
-            <input type="submit" value="Delete">
-        </form></td>
+        <td th:text="${mentor.getPrice()}"></td>
     </tr>
     </tbody>
 </table>

@@ -1,12 +1,10 @@
 package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.dao.StudentDao;
-import com.example.servicediary.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,18 +16,14 @@ public class StudentController {
         this.studentDao = studentDao;
     }
 
-    @GetMapping("")
-    public String studentIndex(Model model){
-        model.addAttribute("students", studentDao.findAll());
-        return "forAdmin/student/studentIndex";
-    }
 
-    @GetMapping("/{id}")
-    public String showStudent(@PathVariable("id")int id, Model model){
-        Student student = studentDao.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("Такой студент не найден"));
-        model.addAttribute("student", student);
-        return "forAdmin/student/showOne";
-    }
+
+//    @GetMapping("/{id}")
+//    public String showStudent(@PathVariable("id")int id, Model model){
+//        Student student = studentDao.findById(id).orElseThrow(() ->
+//                new IllegalArgumentException("Такой студент не найден"));
+//        model.addAttribute("student", student);
+//        return "forAdmin/student/showOne";
+//    }
 
 }

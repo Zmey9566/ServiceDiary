@@ -13,4 +13,5 @@ import java.util.List;
 public interface MentorStudentDao extends JpaRepository<MentorStudent, Integer> {
 
     List<MentorStudent> findByMentorId(int id);
+    List<MentorStudent> findByStudentId(int id);
 }

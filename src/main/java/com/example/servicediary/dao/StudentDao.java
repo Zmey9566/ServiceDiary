@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface StudentDao extends JpaRepository<Student, Integer> {
     Student findByEmail(String email);
-    List<Student> getAllByFamily(String family, Sort sort);
+//    List<Student> getAllByFamily(String family, Sort sort);
     List <Student> findAllByOrderByIdAsc();
 }

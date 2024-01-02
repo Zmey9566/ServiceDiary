@@ -49,14 +49,8 @@
         <td th:text="${student.getLevel()}"></td>
         <td th:text="${student.getEmail()}"></td>
         <td th:text="${student.getRoles().getName()}"></td>
-        <td><form th:method="GET" th:action="@{/forAdmin/student/{id}/edit(id=${student.getId()})}" th:object="${mentor}">
-            <input type="submit" value="Edit">
-        </form></td>
-        <td><form th:method="POST" th:action="@{/forAdmin/student/{id}/delete(id=${student.getId()})}" th:object="${mentor}">
-            <input type="submit" value="Delete">
-        </form></td>
-        <td><form th:method="GET" th:action="@{/forAdmin/student/{id}/showMentor(id=${student.getId()})}">
-            <input type="submit" value="Students">
+        <td><form th:method="GET" th:action="@{/forAdmin/mentor/{id}/showMentor(id=${student.getId()})}">
+            <input type="submit" value="Mentors">
         </form></td>
     </tr>
     </tbody>

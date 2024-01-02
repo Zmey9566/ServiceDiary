@@ -2,6 +2,7 @@ package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorStudentDao;
+import com.example.servicediary.dao.StudentDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
@@ -23,6 +24,7 @@ public class AdminController {
 
     private final MentorService<MentorReadDto, MentorSaveDto> mentorDao;
     private final MentorStudentDao mentorStudentDao;
+    private final StudentDao studentDao;
 
     @GetMapping()
     public String mentorIndex(Model model) {
@@ -81,5 +83,19 @@ public class AdminController {
                 .collect(Collectors.toList());
         model.addAttribute("students", students);
         return "forAdmin/mentor/showMentorStudents";
+    }
+
+    @GetMapping("/{id}/showMentor")
+    public String getMentor(Model model, @PathVariable("id") int id) {
+        List<Mentor> mentors = mentorStudentDao.findByStudentId(id).stream().map(m -> m.getMentor())
+                .collect(Collectors.toList());
+        model.addAttribute("mentors", mentors);
+        return "forAdmin/mentor/showStudentMentors";
+    }
+
+    @GetMapping("/students")
+    public String studentIndex(Model model){
+        model.addAttribute("students", studentDao.findAll());
+        return "forAdmin/mentor/studentIndex";
     }
 }
