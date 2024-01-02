@@ -2,13 +2,11 @@ package com.example.servicediary.controller.noRest;
 
 import com.example.servicediary.Service.MentorService;
 import com.example.servicediary.dao.MentorStudentDao;
-import com.example.servicediary.dao.StudentDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
 import com.example.servicediary.entity.Student;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
