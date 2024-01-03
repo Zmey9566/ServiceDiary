@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,30 +13,55 @@
 </head>
 <body>
     <form th:method="POST" th:action="@{/forAdmin/mentor}" th:object="${mentor}">
-        <label for="family">Family: </label>
-        <input type="text" th:field="*{family}" id="family">
-        <span style="color: red" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Full name error</span>
         <br/>
-        <label for="name">Name: </label>
-        <input type="text" th:field="*{name}" id="name">
-        <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Full name error</span>
-        <br/>
-        <label for="price">Price: </label>
-        <input type="number" th:field="*{price}" id="price">
-        <br/>
-        <label for="email">Email: </label>
-        <input type="text" th:field="*{email}" id="email">
-        <br/>
-        <label>Role: </label>
-<!--        <input type="text" th:field="*{roles.id}" id="roles">-->
-        <select th:field="*{roles.id}" id="role" name="role">
-            <option value="1">Admin</option>
-            <option value="2">Mentor</option>
-            <option value="3">Student</option>
-        </select>
-        <br/>
-        <label for="password">Password: </label>
-        <input type="text" th:field="*{password}" id="password">
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm1">Family</span>
+            <input type="text" th:field="*{family}" step="any" id="family" class="form-control"
+                   aria-describedby="inputGroup-sizing-sm">
+            <span style="color: red" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Full name error</span>
+        </div>
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm2">Name</span>
+            <input type="text" th:field="*{name}" step="any" id="name" class="form-control"
+                   aria-describedby="inputGroup-sizing-sm">
+            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Full name error</span>
+        </div>
+<!--        <label for="name">Name: </label>-->
+<!--        <input type="text" th:field="*{name}" id="name">-->
+<!--        <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Full name error</span>-->
+<!--        <br/>-->
+
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm3">Price</span>
+            <input type="text" th:field="*{price}" step="any" id="price" class="form-control"
+                   aria-describedby="inputGroup-sizing-sm">
+        </div>
+<!--        <label for="price">Price: </label>-->
+<!--        <input type="number" th:field="*{price}" id="price">-->
+<!--        <br/>-->
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm4">Email</span>
+            <input type="text" th:field="*{email}" step="any" id="email" class="form-control"
+                   aria-describedby="inputGroup-sizing-sm">
+        </div>
+<!--        <label for="email">Email: </label>-->
+<!--        <input type="text" th:field="*{email}" id="email">-->
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm5">Role</span>
+            <select th:field="*{roles.id}">
+                <option value="0">Выберите роль</option>
+                <option value="1">Админ</option>
+                <option value="2">Преподаватель</option>
+                <option value="3">Студент</option>
+            </select>
+        </div>
+        <div class="input-group input-group-sm mb-3 w-25">
+            <span class="input-group-text" id="inputGroup-sizing-sm6">Password</span>
+            <input type="text" th:field="*{password}" step="any" id="password" class="form-control"
+                   aria-describedby="inputGroup-sizing-sm">
+        </div>
+<!--        <label for="password">Password: </label>-->
+<!--        <input type="text" th:field="*{password}" id="password">-->
         <br/>
         <br/>
         <input type="submit" class="btn btn-primary" value="Create">

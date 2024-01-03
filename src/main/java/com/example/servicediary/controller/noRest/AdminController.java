@@ -6,6 +6,7 @@ import com.example.servicediary.dao.StudentDao;
 import com.example.servicediary.dto.noRest.MentorReadDto;
 import com.example.servicediary.dto.noRest.MentorSaveDto;
 import com.example.servicediary.entity.Mentor;
+import com.example.servicediary.entity.Role;
 import com.example.servicediary.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

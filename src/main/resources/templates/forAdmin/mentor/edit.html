@@ -10,37 +10,37 @@
 <body>
 <form th:method="POST" th:action="@{/forAdmin/mentor/{id}(id=${mentor.getId()})}" th:object="${mentor}">
     <br/>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-25">
         <span class="input-group-text" id="inputGroup-sizing-sm">Family</span>
         <input type="text" th:field="*{family}" id="family" th:value="*{family}" class="form-control"
                aria-describedby="inputGroup-sizing-sm">
         <span style="color: red" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Full name error</span>
     </div>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-25">
         <span class="input-group-text" id="inputGroup-sizing-sm1">Name</span>
         <input type="text" th:field="*{name}" id="name" th:value="*{name}" class="form-control"
                aria-describedby="inputGroup-sizing-sm">
         <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Full name error</span>
     </div>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-25">
         <span class="input-group-text" id="inputGroup-sizing-sm2">Price</span>
         <input type="text" th:field="*{price}" step="any" id="price" class="form-control"
                aria-describedby="inputGroup-sizing-sm">
     </div>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-25">
         <span class="input-group-text" id="inputGroup-sizing-sm3">Email</span>
         <input type="text" th:field="*{email}" step="any" id="email" class="form-control"
                aria-describedby="inputGroup-sizing-sm">
     </div>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-25">
         <span class="input-group-text" id="inputGroup-sizing-sm4">Role</span>
-        <select th:field="*{roles.id}" id="role" name="role">
-            <option value="1">Admin</option>
-            <option value="2">Mentor</option>
-            <option value="3">Student</option>
+        <select th:field="*{roles.id}">
+            <option value="1">Админ</option>
+            <option value="2">Преподаватель</option>
+            <option value="3">Студент</option>
         </select>
     </div>
-    <div class="input-group input-group-sm mb-3">
+    <div class="input-group input-group-sm mb-3 w-auto">
         <span class="input-group-text" id="inputGroup-sizing-sm5">Password</span>
         <input type="text" th:field="*{password}" step="any" id="password" class="form-control"
                aria-describedby="inputGroup-sizing-sm">
