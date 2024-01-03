@@ -34,8 +34,11 @@
     </div>
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm4">Role</span>
-        <input type="text" th:field="*{roles.id}" step="any" id="role" class="form-control"
-               aria-describedby="inputGroup-sizing-sm">
+        <select th:field="*{roles.id}" id="role" name="role">
+            <option value="1">Admin</option>
+            <option value="2">Mentor</option>
+            <option value="3">Student</option>
+        </select>
     </div>
     <div class="input-group input-group-sm mb-3">
         <span class="input-group-text" id="inputGroup-sizing-sm5">Password</span>
@@ -44,13 +47,9 @@
     </div>
     <br/>
     <input type="submit" class="btn btn-primary" value="Update">
-
-    <!--    <label for="family">Family: </label>-->
-    <!--    <input type="text" th:field="*{family}" id="family" th:value="*{family}"/>-->
-    <!--    <label for="name">Name: </label>-->
-    <!--    <input type="text" th:field="*{name}" id="name" th:value="*{name}"/>-->
-    <!--    <label for="price">Price: </label>-->
-    <!--    <input type="number" th:field="*{price}" step="any" id="price" th:value="*{price}"/>-->
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <a class="btn btn-primary" href="/forAdmin/mentor">Back</a>
+    </div>
 
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
